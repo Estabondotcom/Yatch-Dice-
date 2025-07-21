@@ -247,3 +247,14 @@ confirmYes.addEventListener("click", () => {
 confirmCancel.addEventListener("click", () => {
   confirmPopup.style.display = "none";
 });
+const rulesBtn = document.getElementById("rules-btn");
+const rulesModal = document.getElementById("rules-modal");
+const closeRules = document.getElementById("close-rules");
+
+rulesBtn.addEventListener("click", () => {
+  rulesModal.style.display = "flex";
+});
+
+closeRules.addEventListener("click", () => {
+  rulesModal.style.display = "none";
+});
