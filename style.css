@@ -131,41 +131,42 @@ th, td {
   pointer-events: none;
   opacity: 0.5;
 }
-/* Updated table color scheme */
+/* General Table Style */
 table {
-  background: #f5f5dc; /* Beige background */
+  background: #f5f5dc; /* Beige */
+  border-collapse: collapse;
 }
 
 th, td {
-  color: black;
+  color: black !important;
   font-weight: bold;
+  border: 1px solid #ccc;
 }
 
-/* Preview (unchanged) */
+/* Score previews & final values */
 .preview {
   background-color: #e0e0e0;
-  font-weight: bold;
 }
-
-/* Score results */
 .filled {
-  background-color: #c8f7c5; /* green for non-zero score */
+  background-color: #c8f7c5;
 }
 .filled-zero {
-  background-color: #f7c5c5; /* red for 0 score */
+  background-color: #f7c5c5;
 }
 .selected {
   background-color: #d0ebff !important;
   border: 2px solid #007bff;
 }
 
-/* Special highlight cells */
-#upper-subtotal {
-  background-color: #ffddb0 !important; /* light orange */
+/* Special score highlight rows */
+#upper-subtotal, #upper-subtotal + td {
+  background-color: #ffddb0 !important; /* Light orange */
 }
-#upper-bonus {
-  background-color: #fff685 !important; /* yellow */
+
+#upper-bonus, #upper-bonus + td {
+  background-color: #fff685 !important; /* Yellow */
 }
-#total-score {
-  background-color: #b7f5b2 !important; /* light green */
+
+#total-score, #total-score + td {
+  background-color: #b7f5b2 !important; /* Light green */
 }
