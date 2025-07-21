@@ -12,7 +12,12 @@ h1 {
   margin-top: 10px;
   font-size: 1.8em;
 }
-
+/* ========== Container Wrapper ========== */
+.game-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 10px;
+}
 button {
   padding: 12px 20px;
   font-size: 1rem;
