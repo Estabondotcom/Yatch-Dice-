@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <h1>The Yachtz!</h1> <button id="new-game-btn">New Game</button>
+<button id="rules-btn">Rules</button>  <h1>The Yachtz!</h1> <button id="new-game-btn">New Game</button>
   <div id="confirm-popup">
   <div class="confirm-box">
     <p>Start a new game? Current progress will be lost.</p>
@@ -15,6 +15,19 @@
       <button id="confirm-yes">Yes</button>
       <button id="confirm-cancel">Cancel</button>
     </div>
+  </div>
+</div>
+  <div id="rules-modal">
+  <div class="rules-box">
+    <h2>The Yachtz Rules</h2>
+    <ul>
+      <li>Roll up to 3 times per turn to get the best dice combo.</li>
+      <li>Choose a category to score each turn. Each can be used once.</li>
+      <li>Upper section: score as many of each number (1–6) as you can.</li>
+      <li>Lower section: aim for combos (e.g., full house, straights, Yachtz).</li>
+      <li>Try to get the highest total score after all 13 rounds!</li>
+    </ul>
+    <button id="close-rules">Close</button>
   </div>
 </div>
   
