@@ -1,5 +1,6 @@
 let pendingCategory = null;
 let confirmMode = false;
+let gameStarted = false;
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -15,7 +16,7 @@ let locked = [false, false, false, false, false];
 let rollsLeft = 3;
 let scored = {};
 
-// 🎲 Render Dice to Page
+// 🎲 Render Dice
 function renderDice() {
   diceContainer.innerHTML = "";
   dice.forEach((value, i) => {
@@ -23,7 +24,7 @@ function renderDice() {
     die.className = "die" + (locked[i] ? " locked" : "");
     die.textContent = value;
     die.addEventListener("click", () => {
-      if (!confirmMode) {
+      if (!confirmMode && gameStarted) {
         locked[i] = !locked[i];
         renderDice();
         updateScorePreviews();
@@ -33,7 +34,7 @@ function renderDice() {
   });
 }
 
-// 🔁 Turn Reset
+// 🔁 Reset Turn
 function resetTurn() {
   locked = [false, false, false, false, false];
   rollsLeft = 3;
@@ -44,8 +45,16 @@ function resetTurn() {
   updateScorePreviews();
 }
 
-// 🌀 Roll or Confirm Button Behavior
+// ▶️ Main Roll/Confirm/Start button logic
 function rollOrConfirm() {
+  // First-time start
+  if (!gameStarted) {
+    gameStarted = true;
+    resetTurn();
+    return;
+  }
+
+  // Confirm score
   if (confirmMode && pendingCategory) {
     const category = pendingCategory;
     const score = parseInt(document.getElementById("score-" + category).textContent, 10);
@@ -54,7 +63,6 @@ function rollOrConfirm() {
     const scoreCell = document.getElementById("score-" + category);
     scoreCell.className = score === 0 ? "filled-zero" : "filled";
 
-    // Update totals
     const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
     const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
     document.getElementById("upper-subtotal").textContent = upperTotal;
@@ -71,6 +79,7 @@ function rollOrConfirm() {
     return;
   }
 
+  // Rolling
   if (rollsLeft <= 0) return;
 
   dice = dice.map((val, i) => locked[i] ? val : Math.ceil(Math.random() * 6));
@@ -80,7 +89,7 @@ function rollOrConfirm() {
   updateScorePreviews();
 }
 
-// 🧠 Scoring Helpers
+// 🧠 Score Calculations
 function calculateUpperScore(n) {
   return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
 }
@@ -131,8 +140,10 @@ function calculateScoreForCategory(category) {
   }
 }
 
-// 🖱️ Scoring Clicks
+// 🖱️ Score Selection
 scorecard.addEventListener("click", (e) => {
+  if (!gameStarted) return;
+
   const cell = e.target.closest(".scorable");
   if (!cell) return;
 
@@ -155,7 +166,7 @@ scorecard.addEventListener("click", (e) => {
   confirmMode = true;
 });
 
-// 🔍 Score Preview
+// 🧮 Preview Scores
 function updateScorePreviews() {
   const allCells = document.querySelectorAll(".scorable");
 
@@ -175,7 +186,7 @@ function updateScorePreviews() {
   });
 }
 
-// 🏁 End Game Check
+// ✅ End Game
 function checkEndGame() {
   if (Object.keys(scored).length < 13) return;
 
@@ -184,10 +195,11 @@ function checkEndGame() {
   endModal.style.display = "flex";
 }
 
-// 🔁 Restart Game
+// 🔁 New Game
 function startNewGame() {
   pendingCategory = null;
   confirmMode = false;
+  gameStarted = false;
   scored = {};
   dice = [1, 1, 1, 1, 1];
   locked = [false, false, false, false, false];
@@ -201,13 +213,14 @@ function startNewGame() {
   document.getElementById("upper-subtotal").textContent = "0";
   document.getElementById("upper-bonus").textContent = "0";
   document.getElementById("total-score").textContent = "0";
+  rollBtn.textContent = "Start";
   endModal.style.display = "none";
 
   renderDice();
   updateScorePreviews();
 }
 
-// ▶️ Init
+// 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
 renderDice();
