@@ -49,11 +49,9 @@ function resetTurn() {
 
 // ▶️ Start / Roll / Confirm
 function rollOrConfirm() {
-  // — First click: start & do first roll —
   if (!gameStarted) {
     gameStarted = true;
     resetTurn();
-    // now do the actual roll:
     hasRolledThisTurn = true;
     dice = dice.map(() => Math.ceil(Math.random() * 6));
     rollsLeft--;
@@ -63,7 +61,6 @@ function rollOrConfirm() {
     return;
   }
 
-  // — Confirm selected score —
   if (confirmMode && pendingCategory) {
     const category = pendingCategory;
     const score = parseInt(
@@ -75,15 +72,7 @@ function rollOrConfirm() {
     const scoreCell = document.getElementById("score-" + category);
     scoreCell.className = score === 0 ? "filled-zero" : "filled";
 
-    // Update upper subtotal & bonus
-    const upperCategories = [
-      "ones",
-      "twos",
-      "threes",
-      "fours",
-      "fives",
-      "sixes",
-    ];
+    const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
     const upperTotal = upperCategories.reduce(
       (sum, key) => sum + (scored[key] || 0),
       0
@@ -92,12 +81,9 @@ function rollOrConfirm() {
     const bonus = upperTotal >= 63 ? 35 : 0;
     document.getElementById("upper-bonus").textContent = bonus;
 
-    // Update grand total
-    const total =
-      Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
+    const total = Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
     document.getElementById("total-score").textContent = total;
 
-    // Cleanup and next turn
     pendingCategory = null;
     confirmMode = false;
     checkEndGame();
@@ -105,7 +91,6 @@ function rollOrConfirm() {
     return;
   }
 
-  // — Normal roll (if rolls remain) —
   if (rollsLeft <= 0) return;
 
   hasRolledThisTurn = true;
@@ -116,7 +101,7 @@ function rollOrConfirm() {
   updateScorePreviews();
 }
 
-// 🧠 Score Helpers
+// 🧠 Score Calculations
 function calculateUpperScore(n) {
   return dice.filter((d) => d === n).reduce((a, b) => a + b, 0);
 }
@@ -154,38 +139,24 @@ function sumAllDice() {
 }
 function calculateScoreForCategory(category) {
   switch (category) {
-    case "ones":
-      return calculateUpperScore(1);
-    case "twos":
-      return calculateUpperScore(2);
-    case "threes":
-      return calculateUpperScore(3);
-    case "fours":
-      return calculateUpperScore(4);
-    case "fives":
-      return calculateUpperScore(5);
-    case "sixes":
-      return calculateUpperScore(6);
-    case "threeKind":
-      return hasNOfAKind(3) ? sumAllDice() : 0;
-    case "fourKind":
-      return hasNOfAKind(4) ? sumAllDice() : 0;
-    case "fullHouse":
-      return isFullHouse() ? 25 : 0;
-    case "smallStraight":
-      return isSmallStraight() ? 30 : 0;
-    case "largeStraight":
-      return isLargeStraight() ? 40 : 0;
-    case "yahtzee":
-      return isYahtzee() ? 50 : 0;
-    case "chance":
-      return sumAllDice();
-    default:
-      return 0;
+    case "ones": return calculateUpperScore(1);
+    case "twos": return calculateUpperScore(2);
+    case "threes": return calculateUpperScore(3);
+    case "fours": return calculateUpperScore(4);
+    case "fives": return calculateUpperScore(5);
+    case "sixes": return calculateUpperScore(6);
+    case "threeKind": return hasNOfAKind(3) ? sumAllDice() : 0;
+    case "fourKind": return hasNOfAKind(4) ? sumAllDice() : 0;
+    case "fullHouse": return isFullHouse() ? 25 : 0;
+    case "smallStraight": return isSmallStraight() ? 30 : 0;
+    case "largeStraight": return isLargeStraight() ? 40 : 0;
+    case "yahtzee": return isYahtzee() ? 50 : 0;
+    case "chance": return sumAllDice();
+    default: return 0;
   }
 }
 
-// 🖱️ Score Selection (row-based)
+// 🖱️ Handle Score Selection
 scorecard.addEventListener("click", (e) => {
   if (!gameStarted || !hasRolledThisTurn) return;
 
@@ -197,25 +168,22 @@ scorecard.addEventListener("click", (e) => {
   const category = labelCell.dataset.category;
   if (scored[category]) return;
 
-  // Clear old preview
   if (pendingCategory) {
     const old = document.getElementById("score-" + pendingCategory);
     old.className = "preview";
   }
 
-  // New preview
   pendingCategory = category;
   const score = calculateScoreForCategory(category);
   const scoreCell = document.getElementById("score-" + category);
   scoreCell.textContent = score;
   scoreCell.className = "preview selected";
 
-  // Switch button to confirm
   rollBtn.textContent = "Confirm";
   confirmMode = true;
 });
 
-// 🔍 Score Preview for unscored cells
+// 🔍 Score Preview
 function updateScorePreviews() {
   document.querySelectorAll(".scorable").forEach((cell) => {
     const cat = cell.dataset.category;
@@ -231,9 +199,10 @@ function updateScorePreviews() {
   });
 }
 
-// 🏁 End-of-Game Modal
+// ✅ End Game Modal
 function checkEndGame() {
-  if (Object.keys(scored).length < 13) return;
+  if (!gameStarted || Object.keys(scored).length < 13) return;
+
   const total = parseInt(document.getElementById("total-score").textContent, 10) || 0;
   finalScoreText.textContent = `You scored ${total} points!`;
   endModal.style.display = "flex";
