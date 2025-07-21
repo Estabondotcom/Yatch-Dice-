@@ -1,16 +1,18 @@
 /* ========== General Page Styles ========== */
-body {
+body, html {
   font-family: sans-serif;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  height: 100vh;
   background: #f0f0f0;
   color: #000;
   text-align: center;
   overflow-x: hidden;
+  overflow-y: hidden; /* prevent double scroll */
 }
 
 h1 {
-  margin-top: 10px;
+  margin: 10px 0;
   font-size: 1.8em;
 }
 
@@ -19,12 +21,62 @@ h1 {
   display: flex;
   justify-content: center;
   padding: 0;
-  max-width: none;
   width: 100%;
+  max-width: none;
+  height: 100%;
 }
 
-button {
-  padding: 12px 20px;
+.game-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  height: calc(100vh - 60px); /* fit everything below the header */
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+
+/* ========== Left = Scrollable Scorecard ========== */
+.left-panel {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  max-height: 60vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* ========== Dice & Button ========== */
+.right-panel {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.right-panel .dice {
+  display: flex;
+  flex-direction: row; /* ✅ horizontal dice */
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
+#dice-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.right-panel button {
+  margin-top: 10px;
+  width: 90%;
+  padding: 10px 15px;
   font-size: 1rem;
   border-radius: 8px;
   border: none;
@@ -42,70 +94,12 @@ button:active {
   box-shadow: none;
 }
 
-/* ========== Layout: Scorecard + Dice Side-by-Side ========== */
-.game-layout {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
-  flex-wrap: nowrap;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.left-panel {
-  flex: 1 1 55%;
-  max-width: 95vw;
-  min-width: 0;
-  overflow-x: hidden;
-  box-sizing: border-box;
-}
-
-.right-panel {
-  flex: 0 0 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.right-panel .dice {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-#dice-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-.right-panel button {
-  margin-top: 20px;
-  width: 80%;
-}
-
-/* ========== Scorecard Wrapper ========== */
-.scorecard-wrapper {
-  width: 100%;
-  max-height: 80%;
-  max-width: none;
-  overflow-x: hidden;
-}
-
 /* ========== Dice Styles ========== */
-.dice {
-  justify-content: center;
-}
-
 .die {
-  font-size: 28px;
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
   background: white;
   border: 2px solid black;
   border-radius: 10px;
@@ -124,21 +118,26 @@ button:active {
 }
 
 /* ========== Table & Scorecard ========== */
+.scorecard-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 table {
   width: 100%;
-  max-width: 600px;
   border-collapse: collapse;
-  background: #f5f5dc; /* beige */
+  background: #f5f5dc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 th,
 td {
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #ccc;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-weight: bold;
   color: black !important;
-  font-weight: bold !important;
 }
 
 .scorable {
@@ -184,121 +183,4 @@ td {
 #total-score,
 #label-total-score {
   background-color: #b7f5b2 !important;
-}
-
-/* ========== Mobile Styles (screen width < 600px) ========== */
-@media (max-width: 599px) {
-  .game-layout {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .left-panel,
-  .right-panel {
-    width: 100%;
-  }
-
-  .right-panel .dice {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .right-panel button {
-    width: 90%;
-    margin-top: 15px;
-  }
-
-  .die {
-    font-size: 22px;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-  }
-
-  button {
-    font-size: 1.1rem;
-  }
-
-  th,
-  td {
-    padding: 8px;
-    font-size: 0.85rem;
-  }
-
-  table {
-    font-size: 0.85rem;
-  }
-}
-/* === Lock full screen height on iPhone 15 === */
-body, html {
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* === Make game layout scroll-free and balanced === */
-.game-layout {
-  height: calc(100vh - 60px); /* remove header + margin buffer */
-  overflow: hidden;
-}
-
-/* === Shrink and fit content cleanly on iPhone 15 === */
-@media (max-width: 400px) {
-  h1 {
-    margin: 8px 0;
-    font-size: 1.4rem;
-  }
-
-  .game-layout {
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-    gap: 10px;
-    height: calc(100vh - 50px);
-  }
-
-  .left-panel {
-    width: 100%;
-    max-width: 100%;
-    overflow-y: hidden;
-  }
-
-  .right-panel {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .right-panel .dice {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .die {
-    font-size: 18px;
-    width: 42px;
-    height: 42px;
-    line-height: 42px;
-  }
-
-  .right-panel button {
-    font-size: 0.9rem;
-    padding: 10px 15px;
-    margin: 6px 0;
-    width: 90%;
-  }
-
-  table {
-    font-size: 0.75rem;
-    max-height: 230px;
-    overflow: hidden;
-  }
-
-  th, td {
-    padding: 6px;
-    font-size: 0.75rem;
-  }
 }
