@@ -49,19 +49,14 @@ function resetTurn() {
 
 // ▶️ Button Logic: Start, Roll, or Confirm
 function rollOrConfirm() {
-  // First-time start
+  // First-time start → trigger first roll
   if (!gameStarted) {
-  gameStarted = true;
-  rollsLeft = 3;
-  hasRolledThisTurn = true; // enable scorecard after initial roll
-
-  dice = dice.map(() => Math.ceil(Math.random() * 6));
-  rollsLeft--;
-  rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
-  renderDice();
-  updateScorePreviews();
-  return;
-}
+    gameStarted = true;
+    rollsLeft = 3;
+    hasRolledThisTurn = false;
+    rollOrConfirm(); // trigger normal roll logic now that gameStarted = true
+    return;
+  }
 
   // Confirm score
   if (confirmMode && pendingCategory) {
@@ -88,7 +83,7 @@ function rollOrConfirm() {
     return;
   }
 
-  // Rolling
+  // Roll Dice
   if (rollsLeft <= 0) return;
 
   hasRolledThisTurn = true;
