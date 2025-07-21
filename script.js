@@ -1,4 +1,5 @@
 let pendingCategory = null;
+
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
 const rollBtn = document.getElementById("roll-btn");
@@ -32,30 +33,33 @@ function renderDice() {
 // 🎲 Roll Dice
 function rollDice() {
   if (rollsLeft <= 0) return;
+
+  // Commit pending score first
+  if (pendingCategory) {
+    const category = pendingCategory;
+    const score = parseInt(document.getElementById("score-" + category).textContent, 10);
+    scored[category] = score;
+
+    const scoreCell = document.getElementById("score-" + category);
+    scoreCell.className = score === 0 ? "filled-zero" : "filled";
+
+    // Update totals
+    const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
+    const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
+    document.getElementById("upper-subtotal").textContent = upperTotal;
+    const bonus = upperTotal >= 63 ? 35 : 0;
+    document.getElementById("upper-bonus").textContent = bonus;
+
+    const total = Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
+    document.getElementById("total-score").textContent = total;
+
+    pendingCategory = null;
+    checkEndGame();
+  }
+
   dice = dice.map((val, i) => locked[i] ? val : Math.ceil(Math.random() * 6));
   rollsLeft--;
   rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
-  // Commit score from previous turn
-if (pendingCategory) {
-  const category = pendingCategory;
-  const score = parseInt(document.getElementById("score-" + category).textContent, 10);
-  scored[category] = score;
-
-  const scoreCell = document.getElementById("score-" + category);
-  scoreCell.className = score === 0 ? "filled-zero" : "filled";
-
-  // Update totals
-  const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
-  const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
-  document.getElementById("upper-subtotal").textContent = upperTotal;
-  const bonus = upperTotal >= 63 ? 35 : 0;
-  document.getElementById("upper-bonus").textContent = bonus;
-
-  const total = Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
-  document.getElementById("total-score").textContent = total;
-
-  pendingCategory = null;
-  checkEndGame();
   renderDice();
   updateScorePreviews();
 }
@@ -140,7 +144,7 @@ scorecard.addEventListener("click", (e) => {
 
   const scoreCell = document.getElementById("score-" + category);
   scoreCell.textContent = score;
-  scoreCell.className = "preview selected"; // Use a different class to highlight selection
+  scoreCell.className = "preview selected";
 });
 
 // 🔍 Score Preview for Unfilled Cells
@@ -166,19 +170,20 @@ function updateScorePreviews() {
 // 🎯 End Game Check
 function checkEndGame() {
   const totalCategories = 13;
-  if (Object.keys(scored).length === totalCategories) {
-    const finalTotal = parseInt(document.getElementById("total-score").textContent, 10) || 0;
-    finalScoreText.textContent = `You scored ${finalTotal} points!`;
-    endModal.style.display = "flex";
-  }
+  if (Object.keys(scored).length < totalCategories) return;
+
+  const finalTotal = parseInt(document.getElementById("total-score").textContent, 10) || 0;
+  finalScoreText.textContent = `You scored ${finalTotal} points!`;
+  endModal.style.display = "flex";
 }
 
 // 🔁 Restart Game
 function startNewGame() {
+  pendingCategory = null;
+  scored = {};
   dice = [1, 1, 1, 1, 1];
   locked = [false, false, false, false, false];
   rollsLeft = 3;
-  scored = {};
 
   document.querySelectorAll("[id^='score-']").forEach(cell => {
     cell.textContent = "";
@@ -189,10 +194,9 @@ function startNewGame() {
   document.getElementById("upper-bonus").textContent = "0";
   document.getElementById("total-score").textContent = "0";
   endModal.style.display = "none";
-  alert("Restart clicked!"); // Temporary debug
+
   renderDice();
   updateScorePreviews();
-  
 }
 
 // 🔘 Init
