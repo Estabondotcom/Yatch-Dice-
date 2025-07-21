@@ -130,6 +130,7 @@ scorecard.addEventListener("click", (e) => {
   document.getElementById("total-score").textContent = total;
 
   updateScorePreviews();
+  checkEndGame();
   resetTurn();
 });
 
@@ -157,3 +158,37 @@ function updateScorePreviews() {
 rollBtn.addEventListener("click", rollDice);
 renderDice();
 updateScorePreviews();
+
+const endModal = document.getElementById("end-modal");
+const finalScoreText = document.getElementById("final-score");
+const restartBtn = document.getElementById("restart-btn");
+
+function checkEndGame() {
+  const totalCategories = 13; // 6 upper + 7 lower
+  if (Object.keys(scored).length === totalCategories) {
+    const finalTotal = parseInt(document.getElementById("total-score").textContent, 10) || 0;
+    finalScoreText.textContent = `You scored ${finalTotal} points!`;
+    endModal.style.display = "flex";
+  }
+}
+function startNewGame() {
+  dice = [1, 1, 1, 1, 1];
+  locked = [false, false, false, false, false];
+  rollsLeft = 3;
+  scored = {};
+
+  // Clear all score fields and classes
+  document.querySelectorAll("[id^='score-']").forEach(cell => {
+    cell.textContent = "";
+    cell.className = "";
+  });
+
+  document.getElementById("upper-bonus").textContent = "0";
+  document.getElementById("total-score").textContent = "0";
+  endModal.style.display = "none";
+
+  renderDice();
+  updateScorePreviews();
+}
+
+restartBtn.addEventListener("click", startNewGame);
