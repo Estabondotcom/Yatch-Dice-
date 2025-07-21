@@ -1,14 +1,14 @@
 /* ========== General Page Styles ========== */
-body, html {
-  font-family: sans-serif;
+html, body {
   margin: 0;
   padding: 0;
   height: 100vh;
   background: #f0f0f0;
+  font-family: sans-serif;
   color: #000;
   text-align: center;
   overflow-x: hidden;
-  overflow-y: hidden; /* prevent double scroll */
+  overflow-y: auto;
 }
 
 h1 {
@@ -16,40 +16,30 @@ h1 {
   font-size: 1.8em;
 }
 
-/* ========== Container Wrapper ========== */
+/* ========== Main Layout Container ========== */
 .game-layout {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: calc(100vh - 60px); /* leave space for top bar */
+  height: calc(100vh - 60px); /* leave space for header */
   padding: 0 10px;
-  box-sizing: border-box;
-}
-
-.game-layout {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   gap: 10px;
-  width: 100%;
-  max-width: 100%;
-  height: calc(100vh - 60px); /* fit everything below the header */
   box-sizing: border-box;
-  padding: 0 10px;
 }
 
-/* ========== Left = Scrollable Scorecard ========== */
-..left-panel {
+/* ========== Scrollable Scorecard Panel ========== */
+.left-panel {
   flex: 1;
   overflow-y: auto;
-  margin-bottom: 10px; /* ✅ create space between scorecard and dice */
+  margin-bottom: 10px; /* space above dice */
   max-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* ========== Dice & Button ========== */
+/* ========== Dice and Button Panel ========== */
 .right-panel {
   width: 100%;
-  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,9 +48,8 @@ h1 {
 
 .right-panel .dice {
   display: flex;
-  flex-direction: row; /* ✅ horizontal dice */
+  flex-direction: row;
   justify-content: center;
-  flex-wrap: nowrap;
   gap: 8px;
 }
 
@@ -87,6 +76,7 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 button:active {
   transform: scale(0.96);
   box-shadow: none;
@@ -105,17 +95,19 @@ button:active {
   cursor: pointer;
   user-select: none;
 }
+
 .die:active {
   transform: scale(0.96);
   box-shadow: none;
 }
+
 .locked {
   background-color: #b3cfa7;
   color: #000;
   border-color: #167a32;
 }
 
-/* ========== Table & Scorecard ========== */
+/* ========== Scorecard Table ========== */
 .scorecard-wrapper {
   width: 100%;
   max-width: 100%;
@@ -138,36 +130,39 @@ td {
   color: black !important;
 }
 
+/* ========== Scoring Cell States ========== */
 .scorable {
   cursor: pointer;
   background-color: #fafafa;
 }
+
 .scorable:hover {
   background-color: #eef;
 }
 
-/* Disable unscored fields before first roll */
 #scorecard .scorable:not(.preview):not(.filled):not(.filled-zero) {
   pointer-events: none;
   opacity: 0.5;
 }
 
-/* ========== Cell States ========== */
 .preview {
   background-color: #e0e0e0;
 }
+
 .filled {
   background-color: #c8f7c5;
 }
+
 .filled-zero {
   background-color: #f7c5c5;
 }
+
 .selected {
   background-color: #d0ebff !important;
   border: 2px solid #007bff;
 }
 
-/* ========== Special Row Colors ========== */
+/* ========== Special Score Row Colors ========== */
 #upper-subtotal,
 #label-upper-subtotal {
   background-color: #ffddb0 !important;
