@@ -143,22 +143,6 @@ scorecard.addEventListener("click", (e) => {
   scoreCell.className = "preview selected"; // Use a different class to highlight selection
 });
 
-  // Upper Section Logic
-  const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
-  const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
-  document.getElementById("upper-subtotal").textContent = upperTotal;
-  const bonus = upperTotal >= 63 ? 35 : 0;
-  document.getElementById("upper-bonus").textContent = bonus;
-
-  // Total Score
-  const total = Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
-  document.getElementById("total-score").textContent = total;
-
-  updateScorePreviews();
-  checkEndGame();
-  resetTurn();
-});
-
 // 🔍 Score Preview for Unfilled Cells
 function updateScorePreviews() {
   const allCells = document.querySelectorAll(".scorable");
