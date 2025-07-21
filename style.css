@@ -131,3 +131,41 @@ th, td {
   pointer-events: none;
   opacity: 0.5;
 }
+/* Updated table color scheme */
+table {
+  background: #f5f5dc; /* Beige background */
+}
+
+th, td {
+  color: black;
+  font-weight: bold;
+}
+
+/* Preview (unchanged) */
+.preview {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+/* Score results */
+.filled {
+  background-color: #c8f7c5; /* green for non-zero score */
+}
+.filled-zero {
+  background-color: #f7c5c5; /* red for 0 score */
+}
+.selected {
+  background-color: #d0ebff !important;
+  border: 2px solid #007bff;
+}
+
+/* Special highlight cells */
+#upper-subtotal {
+  background-color: #ffddb0 !important; /* light orange */
+}
+#upper-bonus {
+  background-color: #fff685 !important; /* yellow */
+}
+#total-score {
+  background-color: #b7f5b2 !important; /* light green */
+}
