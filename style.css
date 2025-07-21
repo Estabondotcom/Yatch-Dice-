@@ -219,3 +219,15 @@ td {
     overflow-x: auto;
   }
 }
+
+.left-panel {
+  overflow-x: hidden;     /* Prevent dragging/scrolling */
+  max-width: 100%;        /* Don’t grow beyond container */
+  box-sizing: border-box; /* Respect padding/border in width calculations */
+}
+
+.scorecard-wrapper {
+  overflow-x: hidden;     /* Disable horizontal scroll completely */
+  max-width: 100%;        /* Don't try to exceed layout bounds */
+  width: 100%;
+}
