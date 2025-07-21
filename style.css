@@ -54,8 +54,8 @@ button:active {
 /* Keep table from stretching too wide on small screens */
 .scorecard-wrapper {
   width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
+  max-width: visible;
+  overflow-x: none;
 }
 ..right-panel {
   flex: 0 0 40%; /* Give it a fixed width for dice + button */
