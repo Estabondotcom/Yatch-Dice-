@@ -47,18 +47,15 @@ function resetTurn() {
   updateScorePreviews();
 }
 
-// ▶️ Button Logic: Start, Roll, or Confirm
+// ▶️ Start / Roll / Confirm Logic
 function rollOrConfirm() {
-  // First-time start → trigger first roll
   if (!gameStarted) {
     gameStarted = true;
-    rollsLeft = 3;
-    hasRolledThisTurn = false;
-    rollOrConfirm(); // trigger normal roll logic now that gameStarted = true
+    resetTurn();
+    rollOrConfirm(); // immediately perform first roll
     return;
   }
 
-  // Confirm score
   if (confirmMode && pendingCategory) {
     const category = pendingCategory;
     const score = parseInt(document.getElementById("score-" + category).textContent, 10);
@@ -83,7 +80,6 @@ function rollOrConfirm() {
     return;
   }
 
-  // Roll Dice
   if (rollsLeft <= 0) return;
 
   hasRolledThisTurn = true;
@@ -145,7 +141,7 @@ function calculateScoreForCategory(category) {
   }
 }
 
-// 🖱️ Handle Score Selection
+// 🖱️ Score Input
 scorecard.addEventListener("click", (e) => {
   if (!gameStarted || !hasRolledThisTurn) return;
 
@@ -194,7 +190,6 @@ function updateScorePreviews() {
 // 🏁 End Game
 function checkEndGame() {
   if (Object.keys(scored).length < 13) return;
-
   const finalTotal = parseInt(document.getElementById("total-score").textContent, 10) || 0;
   finalScoreText.textContent = `You scored ${finalTotal} points!`;
   endModal.style.display = "flex";
