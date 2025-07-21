@@ -159,3 +159,51 @@ th, td {
     display: block;
   }
 }
+/* Layout: Scorecard + Dice Side-by-Side */
+.game-layout {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.left-panel {
+  flex: 1 1 300px;
+}
+
+.right-panel {
+  flex: 1 1 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.right-panel .dice {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right-panel button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Mobile-friendly tweak: stack everything */
+@media (max-width: 600px) {
+  .game-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .right-panel .dice {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .right-panel button {
+    width: 90%;
+  }
+}
