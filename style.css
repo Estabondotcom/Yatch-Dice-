@@ -47,7 +47,7 @@ button:active {
 }
 
 .left-panel {
-  flex: 1 1 300px;
+  flex: 1 1 55%;
   min-width: 0; /* Prevent overflow */
 }
 
@@ -58,7 +58,7 @@ button:active {
   overflow-x: auto;
 }
 ..right-panel {
-  flex: 0 0 180px; /* Give it a fixed width for dice + button */
+  flex: 0 0 40%; /* Give it a fixed width for dice + button */
   display: flex;
   flex-direction: column;
   align-items: center;
