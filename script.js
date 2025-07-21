@@ -1,3 +1,4 @@
+let pendingCategory = null;
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
 const rollBtn = document.getElementById("roll-btn");
@@ -34,6 +35,27 @@ function rollDice() {
   dice = dice.map((val, i) => locked[i] ? val : Math.ceil(Math.random() * 6));
   rollsLeft--;
   rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+  // Commit score from previous turn
+if (pendingCategory) {
+  const category = pendingCategory;
+  const score = parseInt(document.getElementById("score-" + category).textContent, 10);
+  scored[category] = score;
+
+  const scoreCell = document.getElementById("score-" + category);
+  scoreCell.className = score === 0 ? "filled-zero" : "filled";
+
+  // Update totals
+  const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
+  const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
+  document.getElementById("upper-subtotal").textContent = upperTotal;
+  const bonus = upperTotal >= 63 ? 35 : 0;
+  document.getElementById("upper-bonus").textContent = bonus;
+
+  const total = Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
+  document.getElementById("total-score").textContent = total;
+
+  pendingCategory = null;
+  checkEndGame();
   renderDice();
   updateScorePreviews();
 }
@@ -106,9 +128,20 @@ scorecard.addEventListener("click", (e) => {
   const category = cell.dataset.category;
   if (scored[category]) return;
 
+  // Clear previously selected preview
+  if (pendingCategory) {
+    const oldCell = document.getElementById("score-" + pendingCategory);
+    oldCell.className = "preview";
+  }
+
+  // Mark new pending category
+  pendingCategory = category;
   const score = calculateScoreForCategory(category);
-  document.getElementById("score-" + category).textContent = score;
-  scored[category] = score;
+
+  const scoreCell = document.getElementById("score-" + category);
+  scoreCell.textContent = score;
+  scoreCell.className = "preview selected"; // Use a different class to highlight selection
+});
 
   // Upper Section Logic
   const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
