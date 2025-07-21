@@ -189,9 +189,10 @@ function startNewGame() {
   document.getElementById("upper-bonus").textContent = "0";
   document.getElementById("total-score").textContent = "0";
   endModal.style.display = "none";
-
+  alert("Restart clicked!"); // Temporary debug
   renderDice();
   updateScorePreviews();
+  
 }
 
 // 🔘 Init
