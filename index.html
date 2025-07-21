@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Solo Yahtzee</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 20px; }
+    .dice { display: flex; justify-content: center; margin: 20px; }
+    .die {
+      font-size: 32px;
+      width: 50px; height: 50px;
+      line-height: 50px;
+      margin: 0 5px;
+      border: 2px solid black;
+      cursor: pointer;
+    }
+    .locked { background-color: #ccc; }
+    button { margin: 10px; font-size: 16px; }
+    table { margin: 20px auto; border-collapse: collapse; }
+    td, th { border: 1px solid #999; padding: 8px 12px; }
+    .scorable:hover { background-color: #eef; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Solo Yahtzee</h1>
+  <div class="dice" id="dice-container"></div>
+  <button id="roll-btn">Roll Dice (3 rolls left)</button>
+  <table>
+    <thead>
+      <tr><th>Category</th><th>Score</th></tr>
+    </thead>
+    <tbody id="scorecard">
+      <tr><td class="scorable" data-category="ones">Ones</td><td id="score-ones"></td></tr>
+      <tr><td class="scorable" data-category="twos">Twos</td><td id="score-twos"></td></tr>
+      <tr><td class="scorable" data-category="threes">Threes</td><td id="score-threes"></td></tr>
+      <tr><td class="scorable" data-category="fours">Fours</td><td id="score-fours"></td></tr>
+      <tr><td class="scorable" data-category="fives">Fives</td><td id="score-fives"></td></tr>
+      <tr><td class="scorable" data-category="sixes">Sixes</td><td id="score-sixes"></td></tr>
+      <tr><td><strong>Total</strong></td><td id="total-score">0</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const diceContainer = document.getElementById("dice-container");
+    const rollBtn = document.getElementById("roll-btn");
+    const scorecard = document.getElementById("scorecard");
+    let dice = [1, 1, 1, 1, 1];
+    let locked = [false, false, false, false, false];
+    let rollsLeft = 3;
+    let scored = {};
+
+    function renderDice() {
+      diceContainer.innerHTML = "";
+      dice.forEach((value, i) => {
+        const die = document.createElement("div");
+        die.className = "die" + (locked[i] ? " locked" : "");
+        die.textContent = value;
+        die.addEventListener("click", () => {
+          locked[i] = !locked[i];
+          renderDice();
+        });
+        diceContainer.appendChild(die);
+      });
+    }
+
+    function rollDice() {
+      if (rollsLeft <= 0) return;
+      dice = dice.map((val, i) => locked[i] ? val : Math.ceil(Math.random() * 6));
+      rollsLeft--;
+      rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+      renderDice();
+    }
+
+    function resetTurn() {
+      locked = [false, false, false, false, false];
+      rollsLeft = 3;
+      rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+      renderDice();
+    }
+
+    function calculateUpperScore(n) {
+      return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
+    }
+
+    rollBtn.addEventListener("click", rollDice);
+
+    scorecard.addEventListener("click", (e) => {
+      const cell = e.target.closest(".scorable");
+      if (!cell) return;
+
+      const category = cell.dataset.category;
+      if (scored[category]) return;
+
+      let score = 0;
+      switch (category) {
+        case "ones": score = calculateUpperScore(1); break;
+        case "twos": score = calculateUpperScore(2); break;
+        case "threes": score = calculateUpperScore(3); break;
+        case "fours": score = calculateUpperScore(4); break;
+        case "fives": score = calculateUpperScore(5); break;
+        case "sixes": score = calculateUpperScore(6); break;
+      }
+
+      document.getElementById("score-" + category).textContent = score;
+      scored[category] = score;
+
+      const total = Object.values(scored).reduce((a, b) => a + b, 0);
+      document.getElementById("total-score").textContent = total;
+
+      resetTurn();
+    });
+
+    renderDice();
+  </script>
+</body>
+</html>
