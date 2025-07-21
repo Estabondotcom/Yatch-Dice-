@@ -264,6 +264,8 @@ td {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 2000;
+  padding: 20px; /* allows inner box breathing room on small screens */
+  box-sizing: border-box;
 }
 
 .rules-box {
@@ -272,23 +274,11 @@ td {
   border-radius: 10px;
   max-width: 90%;
   width: 350px;
+  max-height: 90vh;          /* ✅ don't exceed screen height */
+  overflow-y: auto;          /* ✅ scrolls if content is too tall */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: left;
-}
-
-.rules-box h2 {
-  margin-top: 0;
-  text-align: center;
-}
-
-.rules-box ul {
-  padding-left: 20px;
-  font-size: 0.95rem;
-  margin: 10px 0;
-}
-
-.rules-box li {
-  margin-bottom: 8px;
+  box-sizing: border-box;
 }
 
 #close-rules {
