@@ -228,4 +228,22 @@ document.getElementById("new-game-btn").addEventListener("click", startNewGame);
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
-startNewGame(); // ← this replaces renderDice()
+startNewGame(); 
+
+const newGameBtn = document.getElementById("new-game-btn");
+const confirmPopup = document.getElementById("confirm-popup");
+const confirmYes = document.getElementById("confirm-yes");
+const confirmCancel = document.getElementById("confirm-cancel");
+
+newGameBtn.addEventListener("click", () => {
+  confirmPopup.style.display = "flex";
+});
+
+confirmYes.addEventListener("click", () => {
+  startNewGame();
+  confirmPopup.style.display = "none";
+});
+
+confirmCancel.addEventListener("click", () => {
+  confirmPopup.style.display = "none";
+});
