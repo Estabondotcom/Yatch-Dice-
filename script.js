@@ -63,20 +63,14 @@ function rollOrConfirm() {
 
   if (confirmMode && pendingCategory) {
     const category = pendingCategory;
-    const score = parseInt(
-      document.getElementById("score-" + category).textContent,
-      10
-    );
+    const score = parseInt(document.getElementById("score-" + category).textContent, 10);
     scored[category] = score;
 
     const scoreCell = document.getElementById("score-" + category);
     scoreCell.className = score === 0 ? "filled-zero" : "filled";
 
     const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
-    const upperTotal = upperCategories.reduce(
-      (sum, key) => sum + (scored[key] || 0),
-      0
-    );
+    const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
     document.getElementById("upper-subtotal").textContent = upperTotal;
     const bonus = upperTotal >= 63 ? 35 : 0;
     document.getElementById("upper-bonus").textContent = bonus;
@@ -86,8 +80,8 @@ function rollOrConfirm() {
 
     pendingCategory = null;
     confirmMode = false;
-    checkEndGame();
     resetTurn();
+    checkEndGame();
     return;
   }
 
@@ -103,7 +97,7 @@ function rollOrConfirm() {
 
 // 🧠 Score Calculations
 function calculateUpperScore(n) {
-  return dice.filter((d) => d === n).reduce((a, b) => a + b, 0);
+  return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
 }
 function countOccurrences() {
   return dice.reduce((acc, val) => {
@@ -112,7 +106,7 @@ function countOccurrences() {
   }, {});
 }
 function hasNOfAKind(n) {
-  return Object.values(countOccurrences()).some((count) => count >= n);
+  return Object.values(countOccurrences()).some(count => count >= n);
 }
 function isFullHouse() {
   const counts = Object.values(countOccurrences()).sort();
@@ -120,19 +114,15 @@ function isFullHouse() {
 }
 function isSmallStraight() {
   const unique = [...new Set(dice)].sort();
-  const straights = [
-    [1, 2, 3, 4],
-    [2, 3, 4, 5],
-    [3, 4, 5, 6],
-  ];
-  return straights.some((seq) => seq.every((n) => unique.includes(n)));
+  const straights = [[1,2,3,4], [2,3,4,5], [3,4,5,6]];
+  return straights.some(seq => seq.every(n => unique.includes(n)));
 }
 function isLargeStraight() {
   const sorted = [...new Set(dice)].sort().join(",");
   return sorted === "1,2,3,4,5" || sorted === "2,3,4,5,6";
 }
 function isYahtzee() {
-  return Object.values(countOccurrences()).some((count) => count === 5);
+  return Object.values(countOccurrences()).some(count => count === 5);
 }
 function sumAllDice() {
   return dice.reduce((a, b) => a + b, 0);
@@ -185,6 +175,7 @@ scorecard.addEventListener("click", (e) => {
 
 // 🔍 Score Preview
 function updateScorePreviews() {
+  if (!gameStarted) return;
   document.querySelectorAll(".scorable").forEach((cell) => {
     const cat = cell.dataset.category;
     const sc = document.getElementById("score-" + cat);
@@ -201,7 +192,8 @@ function updateScorePreviews() {
 
 // ✅ End Game Modal
 function checkEndGame() {
-  if (!gameStarted || Object.keys(scored).length < 13) return;
+  if (!gameStarted) return;
+  if (Object.keys(scored).length < 13) return;
 
   const total = parseInt(document.getElementById("total-score").textContent, 10) || 0;
   finalScoreText.textContent = `You scored ${total} points!`;
@@ -230,11 +222,9 @@ function startNewGame() {
   endModal.style.display = "none";
 
   renderDice();
-  updateScorePreviews();
 }
 
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
 renderDice();
-updateScorePreviews();
