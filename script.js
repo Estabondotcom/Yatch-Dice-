@@ -1,6 +1,7 @@
 let pendingCategory = null;
 let confirmMode = false;
 let gameStarted = false;
+let hasRolledThisTurn = false;
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -24,7 +25,7 @@ function renderDice() {
     die.className = "die" + (locked[i] ? " locked" : "");
     die.textContent = value;
     die.addEventListener("click", () => {
-      if (!confirmMode && gameStarted) {
+      if (!confirmMode && gameStarted && hasRolledThisTurn) {
         locked[i] = !locked[i];
         renderDice();
         updateScorePreviews();
@@ -38,19 +39,25 @@ function renderDice() {
 function resetTurn() {
   locked = [false, false, false, false, false];
   rollsLeft = 3;
-  rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+  hasRolledThisTurn = false;
   confirmMode = false;
   pendingCategory = null;
+  rollBtn.textContent = "Roll Dice (3 rolls left)";
   renderDice();
   updateScorePreviews();
 }
 
-// ▶️ Main Roll/Confirm/Start button logic
+// ▶️ Button Logic: Start, Roll, or Confirm
 function rollOrConfirm() {
   // First-time start
   if (!gameStarted) {
     gameStarted = true;
-    resetTurn();
+    hasRolledThisTurn = true;
+    dice = dice.map(() => Math.ceil(Math.random() * 6));
+    rollsLeft = 2;
+    rollBtn.textContent = `Roll Dice (2 rolls left)`;
+    renderDice();
+    updateScorePreviews();
     return;
   }
 
@@ -82,6 +89,7 @@ function rollOrConfirm() {
   // Rolling
   if (rollsLeft <= 0) return;
 
+  hasRolledThisTurn = true;
   dice = dice.map((val, i) => locked[i] ? val : Math.ceil(Math.random() * 6));
   rollsLeft--;
   rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
@@ -140,9 +148,9 @@ function calculateScoreForCategory(category) {
   }
 }
 
-// 🖱️ Score Selection
+// 🖱️ Handle Score Selection
 scorecard.addEventListener("click", (e) => {
-  if (!gameStarted) return;
+  if (!gameStarted || !hasRolledThisTurn) return;
 
   const cell = e.target.closest(".scorable");
   if (!cell) return;
@@ -166,7 +174,7 @@ scorecard.addEventListener("click", (e) => {
   confirmMode = true;
 });
 
-// 🧮 Preview Scores
+// 🔍 Score Previews
 function updateScorePreviews() {
   const allCells = document.querySelectorAll(".scorable");
 
@@ -186,7 +194,7 @@ function updateScorePreviews() {
   });
 }
 
-// ✅ End Game
+// 🏁 End Game
 function checkEndGame() {
   if (Object.keys(scored).length < 13) return;
 
@@ -195,11 +203,12 @@ function checkEndGame() {
   endModal.style.display = "flex";
 }
 
-// 🔁 New Game
+// 🔁 Restart Game
 function startNewGame() {
   pendingCategory = null;
   confirmMode = false;
   gameStarted = false;
+  hasRolledThisTurn = false;
   scored = {};
   dice = [1, 1, 1, 1, 1];
   locked = [false, false, false, false, false];
