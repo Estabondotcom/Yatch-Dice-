@@ -36,9 +36,9 @@ h1 {
 }
 
 .locked {
-  background-color: #ddd;
+  background-color: ##b3cfa7;
   color: #888;
-  border-color: #666;
+  border-color: #167a32;
 }
 
 button {
@@ -126,4 +126,8 @@ th, td {
 .selected {
   background-color: #d0ebff !important;
   border: 2px solid #007bff;
+}
+#scorecard .scorable:not(.preview):not(.filled):not(.filled-zero) {
+  pointer-events: none;
+  opacity: 0.5;
 }
