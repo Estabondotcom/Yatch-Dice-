@@ -111,3 +111,15 @@ th, td {
   transform: scale(0.96);
   box-shadow: none;
 }
+.filled {
+  background-color: #c8f7c5; /* green for scored > 0 */
+}
+
+.filled-zero {
+  background-color: #f7c5c5; /* red for scored 0 */
+}
+
+.preview {
+  background-color: #e0e0e0; /* gray preview (for empty cells this turn) */
+  font-weight: bold;
+}
