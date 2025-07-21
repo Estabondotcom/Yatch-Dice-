@@ -122,6 +122,7 @@ scorecard.addEventListener("click", (e) => {
   // Calculate upper section total
   const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
   const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
+  document.getElementById("upper-subtotal").textContent = upperTotal;
   const bonus = upperTotal >= 63 ? 35 : 0;
   document.getElementById("upper-bonus").textContent = bonus;
 
@@ -217,10 +218,11 @@ function startNewGame() {
   });
 
   document.getElementById("upper-bonus").textContent = "0";
+  document.getElementById("upper-subtotal").textContent = "0";
   document.getElementById("total-score").textContent = "0";
   endModal.style.display = "none";
 
-  renderDice();
+  renderDice(); 
   updateScorePreviews();
 }
 
