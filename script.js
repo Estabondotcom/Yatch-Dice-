@@ -31,6 +31,10 @@ function rollDice() {
   rollsLeft--;
   rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
   renderDice();
+  updateScorePreviews();
+   });
+    diceContainer.appendChild(die);
+  });
 }
 
 // Reset Turn After Scoring
@@ -84,7 +88,24 @@ function isYahtzee() {
 function sumAllDice() {
   return dice.reduce((a, b) => a + b, 0);
 }
-
+function calculateScoreForCategory(category) {
+  switch (category) {
+    case "ones": return calculateUpperScore(1);
+    case "twos": return calculateUpperScore(2);
+    case "threes": return calculateUpperScore(3);
+    case "fours": return calculateUpperScore(4);
+    case "fives": return calculateUpperScore(5);
+    case "sixes": return calculateUpperScore(6);
+    case "threeKind": return hasNOfAKind(3) ? sumAllDice() : 0;
+    case "fourKind": return hasNOfAKind(4) ? sumAllDice() : 0;
+    case "fullHouse": return isFullHouse() ? 25 : 0;
+    case "smallStraight": return isSmallStraight() ? 30 : 0;
+    case "largeStraight": return isLargeStraight() ? 40 : 0;
+    case "yahtzee": return isYahtzee() ? 50 : 0;
+    case "chance": return sumAllDice();
+    default: return 0;
+  }
+}
 // Handle Scoring Clicks
 scorecard.addEventListener("click", (e) => {
   const cell = e.target.closest(".scorable");
@@ -142,7 +163,7 @@ scorecard.addEventListener("click", (e) => {
   // Calculate total score with bonus
   const total = Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
   document.getElementById("total-score").textContent = total;
-
+  updateScorePreviews();
   // Reset for next turn
   resetTurn();
 });
@@ -151,4 +172,23 @@ scorecard.addEventListener("click", (e) => {
 rollBtn.addEventListener("click", rollDice);
 renderDice();
 
+function updateScorePreviews() {
+  const allCells = document.querySelectorAll(".scorable");
+
+  allCells.forEach(cell => {
+    const category = cell.dataset.category;
+    const scoreCell = document.getElementById("score-" + category);
+
+    if (scored[category] !== undefined) {
+      // Already scored — color it
+      const value = scored[category];
+      scoreCell.className = value === 0 ? "filled-zero" : "filled";
+    } else {
+      // Not yet scored — show preview
+      const previewScore = calculateScoreForCategory(category);
+      scoreCell.textContent = previewScore;
+      scoreCell.className = "preview";
+    }
+  });
+}
 document.getElementById("upper-subtotal").textContent = upperTotal;
