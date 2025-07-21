@@ -123,3 +123,7 @@ th, td {
   background-color: #e0e0e0; /* gray preview (for empty cells this turn) */
   font-weight: bold;
 }
+.selected {
+  background-color: #d0ebff !important;
+  border: 2px solid #007bff;
+}
