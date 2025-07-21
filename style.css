@@ -231,3 +231,74 @@ td {
     font-size: 0.85rem;
   }
 }
+/* === Lock full screen height on iPhone 15 === */
+body, html {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* === Make game layout scroll-free and balanced === */
+.game-layout {
+  height: calc(100vh - 60px); /* remove header + margin buffer */
+  overflow: hidden;
+}
+
+/* === Shrink and fit content cleanly on iPhone 15 === */
+@media (max-width: 400px) {
+  h1 {
+    margin: 8px 0;
+    font-size: 1.4rem;
+  }
+
+  .game-layout {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+    height: calc(100vh - 50px);
+  }
+
+  .left-panel {
+    width: 100%;
+    max-width: 100%;
+    overflow-y: hidden;
+  }
+
+  .right-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .right-panel .dice {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .die {
+    font-size: 18px;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+  }
+
+  .right-panel button {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+    margin: 6px 0;
+    width: 90%;
+  }
+
+  table {
+    font-size: 0.75rem;
+    max-height: 230px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 6px;
+    font-size: 0.75rem;
+  }
+}
