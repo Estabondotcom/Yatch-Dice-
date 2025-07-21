@@ -1,4 +1,5 @@
 let pendingCategory = null;
+let confirmMode = false;
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -22,20 +23,30 @@ function renderDice() {
     die.className = "die" + (locked[i] ? " locked" : "");
     die.textContent = value;
     die.addEventListener("click", () => {
-      locked[i] = !locked[i];
-      renderDice();
-      updateScorePreviews();
+      if (!confirmMode) {
+        locked[i] = !locked[i];
+        renderDice();
+        updateScorePreviews();
+      }
     });
     diceContainer.appendChild(die);
   });
 }
 
-// 🎲 Roll Dice
-function rollDice() {
-  if (rollsLeft <= 0) return;
+// 🔁 Turn Reset
+function resetTurn() {
+  locked = [false, false, false, false, false];
+  rollsLeft = 3;
+  rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+  confirmMode = false;
+  pendingCategory = null;
+  renderDice();
+  updateScorePreviews();
+}
 
-  // Commit pending score first
-  if (pendingCategory) {
+// 🌀 Roll or Confirm Button Behavior
+function rollOrConfirm() {
+  if (confirmMode && pendingCategory) {
     const category = pendingCategory;
     const score = parseInt(document.getElementById("score-" + category).textContent, 10);
     scored[category] = score;
@@ -54,8 +65,13 @@ function rollDice() {
     document.getElementById("total-score").textContent = total;
 
     pendingCategory = null;
+    confirmMode = false;
     checkEndGame();
+    resetTurn();
+    return;
   }
+
+  if (rollsLeft <= 0) return;
 
   dice = dice.map((val, i) => locked[i] ? val : Math.ceil(Math.random() * 6));
   rollsLeft--;
@@ -64,16 +80,7 @@ function rollDice() {
   updateScorePreviews();
 }
 
-// 🔄 Reset Turn
-function resetTurn() {
-  locked = [false, false, false, false, false];
-  rollsLeft = 3;
-  rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
-  renderDice();
-  updateScorePreviews();
-}
-
-// 📊 Scoring Helpers
+// 🧠 Scoring Helpers
 function calculateUpperScore(n) {
   return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
 }
@@ -124,7 +131,7 @@ function calculateScoreForCategory(category) {
   }
 }
 
-// 🖱️ Handle Scoring Clicks
+// 🖱️ Scoring Clicks
 scorecard.addEventListener("click", (e) => {
   const cell = e.target.closest(".scorable");
   if (!cell) return;
@@ -132,22 +139,23 @@ scorecard.addEventListener("click", (e) => {
   const category = cell.dataset.category;
   if (scored[category]) return;
 
-  // Clear previously selected preview
   if (pendingCategory) {
     const oldCell = document.getElementById("score-" + pendingCategory);
     oldCell.className = "preview";
   }
 
-  // Mark new pending category
   pendingCategory = category;
   const score = calculateScoreForCategory(category);
 
   const scoreCell = document.getElementById("score-" + category);
   scoreCell.textContent = score;
   scoreCell.className = "preview selected";
+
+  rollBtn.textContent = "Confirm";
+  confirmMode = true;
 });
 
-// 🔍 Score Preview for Unfilled Cells
+// 🔍 Score Preview
 function updateScorePreviews() {
   const allCells = document.querySelectorAll(".scorable");
 
@@ -167,10 +175,9 @@ function updateScorePreviews() {
   });
 }
 
-// 🎯 End Game Check
+// 🏁 End Game Check
 function checkEndGame() {
-  const totalCategories = 13;
-  if (Object.keys(scored).length < totalCategories) return;
+  if (Object.keys(scored).length < 13) return;
 
   const finalTotal = parseInt(document.getElementById("total-score").textContent, 10) || 0;
   finalScoreText.textContent = `You scored ${finalTotal} points!`;
@@ -180,6 +187,7 @@ function checkEndGame() {
 // 🔁 Restart Game
 function startNewGame() {
   pendingCategory = null;
+  confirmMode = false;
   scored = {};
   dice = [1, 1, 1, 1, 1];
   locked = [false, false, false, false, false];
@@ -199,8 +207,8 @@ function startNewGame() {
   updateScorePreviews();
 }
 
-// 🔘 Init
-rollBtn.addEventListener("click", rollDice);
+// ▶️ Init
+rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
 renderDice();
 updateScorePreviews();
