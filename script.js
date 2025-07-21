@@ -53,10 +53,15 @@ function rollOrConfirm() {
   if (!gameStarted) {
   gameStarted = true;
   rollsLeft = 3;
-  hasRolledThisTurn = false;
-  rollOrConfirm(); // call this same function again to trigger first roll
+  hasRolledThisTurn = true; // enable scorecard after initial roll
+
+  dice = dice.map(() => Math.ceil(Math.random() * 6));
+  rollsLeft--;
+  rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+  renderDice();
+  updateScorePreviews();
   return;
-  }
+}
 
   // Confirm score
   if (confirmMode && pendingCategory) {
