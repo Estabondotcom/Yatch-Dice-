@@ -162,27 +162,24 @@ td {
 /* ========== Mobile Styles ========== */
 @media (max-width: 600px) {
   .game-layout {
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .right-panel {
-    flex: 1 1 100px;
-    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
   }
 
   .right-panel .dice {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
   }
 
   .right-panel button {
-    width: 100%;
+    width: 90%;
+    margin-top: 15px;
   }
 
   .die {
