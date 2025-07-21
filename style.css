@@ -157,18 +157,27 @@ td {
 /* ========== Mobile Styles ========== */
 @media (max-width: 600px) {
   .game-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .right-panel {
+    flex: 1 1 100px;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
   }
 
   .right-panel .dice {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   .right-panel button {
-    width: 90%;
+    width: 100%;
   }
 
   .die {
@@ -191,6 +200,5 @@ td {
   table {
     font-size: 0.85rem;
     overflow-x: auto;
-    display: block;
   }
 }
