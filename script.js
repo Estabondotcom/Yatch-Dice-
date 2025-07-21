@@ -51,14 +51,11 @@ function resetTurn() {
 function rollOrConfirm() {
   // First-time start
   if (!gameStarted) {
-    gameStarted = true;
-    hasRolledThisTurn = true;
-    dice = dice.map(() => Math.ceil(Math.random() * 6));
-    rollsLeft = 2;
-    rollBtn.textContent = `Roll Dice (2 rolls left)`;
-    renderDice();
-    updateScorePreviews();
-    return;
+  gameStarted = true;
+  rollsLeft = 3;
+  hasRolledThisTurn = false;
+  rollOrConfirm(); // call this same function again to trigger first roll
+  return;
   }
 
   // Confirm score
