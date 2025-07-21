@@ -112,19 +112,27 @@ td {
 }
 
 /* ========== Special Row Colors ========== */
-#upper-subtotal,
-#upper-subtotal ~ td {
-  background-color: #ffddb0 !important; /* Light orange */
-}
-#upper-bonus,
-#upper-bonus ~ td {
-  background-color: #fff685 !important; /* Yellow */
-}
-#total-score,
-#total-score ~ td {
-  background-color: #b7f5b2 !important; /* Light green */
+/* Ensure all table text is black & bold */
+th, td {
+  color: black !important;
+  font-weight: bold !important;
 }
 
+/* Special row coloring — label + score cells */
+#upper-subtotal,
+#label-upper-subtotal {
+  background-color: #ffddb0 !important; /* Light orange */
+}
+
+#upper-bonus,
+#label-upper-bonus {
+  background-color: #fff685 !important; /* Yellow */
+}
+
+#total-score,
+#label-total-score {
+  background-color: #b7f5b2 !important; /* Light green */
+}
 /* ========== Mobile Styles ========== */
 @media (max-width: 500px) {
   .die {
