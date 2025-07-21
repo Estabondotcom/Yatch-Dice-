@@ -48,16 +48,17 @@ button:active {
 
 .left-panel {
   flex: 1 1 300px;
-  max-width: 100%;
+  min-width: 0; /* Prevent overflow */
 }
+
 /* Keep table from stretching too wide on small screens */
 .scorecard-wrapper {
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
 }
-.right-panel {
-  flex: 0 0 150px;
+..right-panel {
+  flex: 0 0 180px; /* Give it a fixed width for dice + button */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,7 +70,12 @@ button:active {
   flex-direction: column;
   gap: 10px;
 }
-
+#dice-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
 .right-panel button {
   margin-top: 20px;
   width: 100%;
