@@ -16,13 +16,13 @@ h1 {
 button {
   padding: 12px 20px;
   font-size: 1rem;
-  margin-bottom: 20px;
   border-radius: 8px;
   border: none;
   background-color: #0e3006;
   color: white;
   cursor: pointer;
 }
+
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -32,13 +32,41 @@ button:active {
   box-shadow: none;
 }
 
+/* ========== Layout: Scorecard + Dice Side-by-Side ========== */
+.game-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.left-panel {
+  flex: 1 1 300px;
+}
+
+.right-panel {
+  flex: 1 1 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.right-panel .dice {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right-panel button {
+  margin-top: 20px;
+  width: 100%;
+}
+
 /* ========== Dice Styles ========== */
 .dice {
-  display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin: 20px 0;
 }
 
 .die {
@@ -67,7 +95,6 @@ button:active {
 table {
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
   border-collapse: collapse;
   background: #f5f5dc; /* beige */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -79,7 +106,7 @@ td {
   border: 1px solid #ccc;
   font-size: 0.9rem;
   color: black !important;
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .scorable {
@@ -112,13 +139,6 @@ td {
 }
 
 /* ========== Special Row Colors ========== */
-/* Ensure all table text is black & bold */
-th, td {
-  color: black !important;
-  font-weight: bold !important;
-}
-
-/* Special row coloring — label + score cells */
 #upper-subtotal,
 #label-upper-subtotal {
   background-color: #ffddb0 !important; /* Light orange */
@@ -133,64 +153,8 @@ th, td {
 #label-total-score {
   background-color: #b7f5b2 !important; /* Light green */
 }
+
 /* ========== Mobile Styles ========== */
-@media (max-width: 500px) {
-  .die {
-    font-size: 22px;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-  }
-
-  button {
-    width: 90%;
-    font-size: 1.1rem;
-  }
-
-  th,
-  td {
-    padding: 8px;
-    font-size: 0.85rem;
-  }
-
-  table {
-    font-size: 0.85rem;
-    overflow-x: auto;
-    display: block;
-  }
-}
-/* Layout: Scorecard + Dice Side-by-Side */
-.game-layout {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.left-panel {
-  flex: 1 1 300px;
-}
-
-.right-panel {
-  flex: 1 1 180px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.right-panel .dice {
-  flex-direction: column;
-  gap: 10px;
-}
-
-.right-panel button {
-  margin-top: 20px;
-  width: 100%;
-}
-
-/* Mobile-friendly tweak: stack everything */
 @media (max-width: 600px) {
   .game-layout {
     flex-direction: column;
@@ -205,5 +169,28 @@ th, td {
 
   .right-panel button {
     width: 90%;
+  }
+
+  .die {
+    font-size: 22px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  button {
+    font-size: 1.1rem;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+    overflow-x: auto;
+    display: block;
   }
 }
