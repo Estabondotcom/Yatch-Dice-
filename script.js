@@ -227,4 +227,4 @@ function startNewGame() {
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
-renderDice();
+startNewGame(); // ← this replaces renderDice()
