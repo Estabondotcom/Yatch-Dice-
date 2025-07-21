@@ -58,8 +58,8 @@ button:active {
 .scorecard-wrapper {
   width: 100%;
   max-height: 80%
-  max-width: visible;
-  overflow-x: none;
+  max-width: none;
+  overflow-x: visible;
 }
 ..right-panel {
   flex: 0 0 40%; /* Give it a fixed width for dice + button */
