@@ -1,11 +1,12 @@
 /* ========== General Page Styles ========== */
 body {
   font-family: sans-serif;
-  padding: 20px;
+  padding: 0px;
   margin: 0;
   background: #f0f0f0;
   color: #000;
   text-align: center;
+  overflow-x: hidden;
 }
 
 h1 {
