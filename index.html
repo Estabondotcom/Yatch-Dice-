@@ -9,57 +9,47 @@
 <body>
   <h1>Yacht Dice</h1>
 
-  <div class="game-layout">
-    <!-- Left side: scorecard -->
-    <div class="left-panel">
-      <table>
-        <thead>
-          <tr><th>Category</th><th>Score</th></tr>
-        </thead>
-        <tbody id="scorecard">
-          <!-- Upper section -->
-          <tr><td class="scorable" data-category="ones">Ones</td><td id="score-ones"></td></tr>
-          <tr><td class="scorable" data-category="twos">Twos</td><td id="score-twos"></td></tr>
-          <tr><td class="scorable" data-category="threes">Threes</td><td id="score-threes"></td></tr>
-          <tr><td class="scorable" data-category="fours">Fours</td><td id="score-fours"></td></tr>
-          <tr><td class="scorable" data-category="fives">Fives</td><td id="score-fives"></td></tr>
-          <tr><td class="scorable" data-category="sixes">Sixes</td><td id="score-sixes"></td></tr>
+  <div class="game-container">
+    <div class="game-layout">
+      <!-- Left = Scorecard -->
+      <div class="left-panel">
+        <table>
+          <thead>
+            <tr><th>Category</th><th>Score</th></tr>
+          </thead>
+          <tbody id="scorecard">
+            <!-- Upper section -->
+            <tr><td class="scorable" data-category="ones">Ones</td><td id="score-ones"></td></tr>
+            <tr><td class="scorable" data-category="twos">Twos</td><td id="score-twos"></td></tr>
+            <tr><td class="scorable" data-category="threes">Threes</td><td id="score-threes"></td></tr>
+            <tr><td class="scorable" data-category="fours">Fours</td><td id="score-fours"></td></tr>
+            <tr><td class="scorable" data-category="fives">Fives</td><td id="score-fives"></td></tr>
+            <tr><td class="scorable" data-category="sixes">Sixes</td><td id="score-sixes"></td></tr>
+            <tr><td id="label-upper-subtotal"><strong>Upper Subtotal</strong></td><td id="upper-subtotal">0</td></tr>
+            <tr><td id="label-upper-bonus"><strong>Upper Bonus (63+)</strong></td><td id="upper-bonus">0</td></tr>
+            <!-- Lower section -->
+            <tr><td class="scorable" data-category="threeKind">Three of a Kind</td><td id="score-threeKind"></td></tr>
+            <tr><td class="scorable" data-category="fourKind">Four of a Kind</td><td id="score-fourKind"></td></tr>
+            <tr><td class="scorable" data-category="fullHouse">Full House</td><td id="score-fullHouse"></td></tr>
+            <tr><td class="scorable" data-category="smallStraight">Small Straight</td><td id="score-smallStraight"></td></tr>
+            <tr><td class="scorable" data-category="largeStraight">Large Straight</td><td id="score-largeStraight"></td></tr>
+            <tr><td class="scorable" data-category="yahtzee">The Yachtz!</td><td id="score-yahtzee"></td></tr>
+            <tr><td class="scorable" data-category="chance">Chance</td><td id="score-chance"></td></tr>
+            <!-- Total -->
+            <tr><td id="label-total-score"><strong>Total</strong></td><td id="total-score">0</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-          <tr>
-            <td id="label-upper-subtotal"><strong>Upper Subtotal</strong></td>
-            <td id="upper-subtotal">0</td>
-          </tr>
-          <tr>
-            <td id="label-upper-bonus"><strong>Upper Bonus (63+)</strong></td>
-            <td id="upper-bonus">0</td>
-          </tr>
-
-          <!-- Lower section -->
-          <tr><td class="scorable" data-category="threeKind">Three of a Kind</td><td id="score-threeKind"></td></tr>
-          <tr><td class="scorable" data-category="fourKind">Four of a Kind</td><td id="score-fourKind"></td></tr>
-          <tr><td class="scorable" data-category="fullHouse">Full House</td><td id="score-fullHouse"></td></tr>
-          <tr><td class="scorable" data-category="smallStraight">Small Straight</td><td id="score-smallStraight"></td></tr>
-          <tr><td class="scorable" data-category="largeStraight">Large Straight</td><td id="score-largeStraight"></td></tr>
-          <tr><td class="scorable" data-category="yahtzee">The Yachtz!</td><td id="score-yahtzee"></td></tr>
-          <tr><td class="scorable" data-category="chance">Chance</td><td id="score-chance"></td></tr>
-
-          <!-- Total -->
-          <tr>
-            <td id="label-total-score"><strong>Total</strong></td>
-            <td id="total-score">0</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Right side: dice and button -->
-    <div class="right-panel">
-      <div class="dice" id="dice-container"></div>
-      <button id="roll-btn">Start</button>
+      <!-- Right = Dice + Button -->
+      <div class="right-panel">
+        <div class="dice" id="dice-container"></div>
+        <button id="roll-btn">Start</button>
+      </div>
     </div>
   </div>
 
-  <!-- Game Over Modal -->
+  <!-- End Modal -->
   <div id="end-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 100;">
     <div style="background: white; padding: 30px; text-align: center; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.4); max-width: 90%; width: 300px;">
       <h2>Game Over!</h2>
@@ -70,4 +60,3 @@
 
   <script src="script.js" defer></script>
 </body>
-</html>
