@@ -2,6 +2,7 @@ let pendingCategory = null;
 let confirmMode = false;
 let gameStarted = false;
 let hasRolledThisTurn = false;
+let yachtzCount = 0; // ✅ new
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -63,12 +64,34 @@ function rollOrConfirm() {
 
   if (confirmMode && pendingCategory) {
     const category = pendingCategory;
-    const score = parseInt(document.getElementById("score-" + category).textContent, 10);
-    scored[category] = score;
 
-    const scoreCell = document.getElementById("score-" + category);
-    scoreCell.className = score === 0 ? "filled-zero" : "filled";
+    // ✅ Yachtz stacking logic
+    if (category === "yahtzee" && isYahtzee()) {
+      const currentScore = scored["yahtzee"] || 0;
 
+      if (currentScore === 0) {
+        // Already scored 0 — ignore bonus
+        const scoreCell = document.getElementById("score-yahtzee");
+        scoreCell.className = "filled-zero";
+      } else {
+        yachtzCount++;
+        const newScore = 50 + (yachtzCount - 1) * 100;
+        scored["yahtzee"] = newScore;
+
+        const scoreCell = document.getElementById("score-yahtzee");
+        scoreCell.textContent = newScore;
+        scoreCell.className = "filled";
+      }
+    } else {
+      // Standard scoring
+      const score = parseInt(document.getElementById("score-" + category).textContent, 10);
+      scored[category] = score;
+
+      const scoreCell = document.getElementById("score-" + category);
+      scoreCell.className = score === 0 ? "filled-zero" : "filled";
+    }
+
+    // Upper section totals + bonus
     const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
     const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
     document.getElementById("upper-subtotal").textContent = upperTotal;
@@ -114,7 +137,7 @@ function isFullHouse() {
 }
 function isSmallStraight() {
   const unique = [...new Set(dice)].sort();
-  const straights = [[1,2,3,4], [2,3,4,5], [3,4,5,6]];
+  const straights = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]];
   return straights.some(seq => seq.every(n => unique.includes(n)));
 }
 function isLargeStraight() {
@@ -207,6 +230,7 @@ function startNewGame() {
   gameStarted = false;
   hasRolledThisTurn = false;
   scored = {};
+  yachtzCount = 0;
   dice = [1, 1, 1, 1, 1];
   locked = [false, false, false, false, false];
   rollsLeft = 3;
@@ -223,13 +247,13 @@ function startNewGame() {
 
   renderDice();
 }
-document.getElementById("new-game-btn").addEventListener("click", startNewGame);
 
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
-startNewGame(); 
+startNewGame();
 
+// 🧠 New Game Confirm Modal
 const newGameBtn = document.getElementById("new-game-btn");
 const confirmPopup = document.getElementById("confirm-popup");
 const confirmYes = document.getElementById("confirm-yes");
@@ -247,6 +271,8 @@ confirmYes.addEventListener("click", () => {
 confirmCancel.addEventListener("click", () => {
   confirmPopup.style.display = "none";
 });
+
+// 📖 Rules Modal
 const rulesBtn = document.getElementById("rules-btn");
 const rulesModal = document.getElementById("rules-modal");
 const closeRules = document.getElementById("close-rules");
