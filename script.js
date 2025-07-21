@@ -131,8 +131,16 @@ scorecard.addEventListener("click", (e) => {
   document.getElementById("score-" + category).textContent = score;
   scored[category] = score;
 
-  // Update total
-  const total = Object.values(scored).reduce((a, b) => a + b, 0);
+  scored[category] = score;
+
+  // Calculate upper section total
+  const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
+  const upperTotal = upperCategories.reduce((sum, key) => scored[key] || sum, 0);
+  const bonus = upperTotal >= 63 ? 35 : 0;
+  document.getElementById("upper-bonus").textContent = bonus;
+
+  // Calculate total score with bonus
+  const total = Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
   document.getElementById("total-score").textContent = total;
 
   // Reset for next turn
