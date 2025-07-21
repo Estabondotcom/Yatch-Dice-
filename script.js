@@ -223,6 +223,7 @@ function startNewGame() {
 
   renderDice();
 }
+document.getElementById("new-game-btn").addEventListener("click", startNewGame);
 
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
