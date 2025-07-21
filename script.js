@@ -150,3 +150,5 @@ scorecard.addEventListener("click", (e) => {
 // Set up button and initial dice
 rollBtn.addEventListener("click", rollDice);
 renderDice();
+
+document.getElementById("upper-subtotal").textContent = upperTotal;
