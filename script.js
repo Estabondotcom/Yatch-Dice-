@@ -160,10 +160,6 @@ rollBtn.addEventListener("click", rollDice);
 renderDice();
 updateScorePreviews();
 
-const endModal = document.getElementById("end-modal");
-const finalScoreText = document.getElementById("final-score");
-const restartBtn = document.getElementById("restart-btn");
-
 function checkEndGame() {
   const totalCategories = 13; // 6 upper + 7 lower
   if (Object.keys(scored).length === totalCategories) {
