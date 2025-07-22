@@ -483,13 +483,27 @@ function triggerYachtzCelebration() {
     diceEls.forEach(die => die.classList.remove("rainbow"));
   }, 2000);
 }
+const bannedWords = [
+  "fuck", "shit", "bitch", "ass", "dick", "cunt", "nigg", "fag", "rape", "Spook", "nazi", "jew", "jews",
+  "slut", "whore", "cum", "cock", "piss", "twat", "retard", "suck", "jizz", "pussy", "homo", "chink",
+  // Add more as needed — partial matches work too (e.g. "nigg" catches all variants)
+];
+
 // POST SCORE FUNCTION
 function promptAndPostScore(finalScore) {
   const name = prompt("Enter a name for the leaderboard (up to 5 characters):", "PLAYER");
-if (!name || name.length > 5) {
-  alert("Score not submitted. Name must be 1 to 5 characters.");
-  return;
-}
+  if (!name || name.length > 5) {
+    alert("Score not submitted. Name must be 1 to 5 characters.");
+    return;
+  }
+
+  const lowerName = name.toLowerCase();
+
+  // 🚫 Check for slurs or swears
+  if (bannedWords.some(word => lowerName.includes(word))) {
+    alert("Inappropriate name. Score not submitted.");
+    return;
+  }
 
   db.collection("leaderboard").add({
     name: name.toUpperCase(),
