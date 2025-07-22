@@ -32,6 +32,7 @@ html, body {
   margin-bottom: 3px;
   flex-wrap: nowrap;
   gap: 8px;
+  overflow-x: hidden;
 }
 
 /* Left and right button groups */
@@ -50,10 +51,11 @@ html, body {
 
 /* Title wrapper ensures title centers between left and right */
 .title-wrapper {
-  flex: 1;
+  flex: 1 1 0;
   display: flex;
   justify-content: center;
-  pointer-events: none; /* prevent overlap issues */
+  pointer-events: none;
+  min-width: 0;
 }
 
 /* The title itself */
@@ -66,6 +68,9 @@ html, body {
   white-space: nowrap;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-align: center;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 /* ===== Button Styles (reusable) ===== */
