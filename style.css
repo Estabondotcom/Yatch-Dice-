@@ -402,20 +402,19 @@ td {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90vw;
-  max-width: 400px;
-  height: auto;
-  max-height: 90vh;
+  width: 90vw;            /* Use most of screen width on mobile */
+  max-width: 400px;       /* But cap it on desktop */
+  padding: 20px;
   background: rgba(34, 34, 34, 0.95);
   z-index: 3000;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   display: none;
-  padding: 20px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
 #game-complete-banner.show {
