@@ -432,12 +432,15 @@ document.getElementById("post-score-banner").addEventListener("click", () => {
   alert("Score posting not implemented yet!"); // Placeholder action
 });
 
+// Leaderboard modal toggle
 document.getElementById("leaderboard-btn").addEventListener("click", () => {
-  document.getElementById("leaderboard-modal").style.display = "flex";
+  const modal = document.getElementById("leaderboard-modal");
+  if (modal) modal.style.display = "flex";
 });
 
 document.getElementById("close-leaderboard").addEventListener("click", () => {
-  document.getElementById("leaderboard-modal").style.display = "none";
+  const modal = document.getElementById("leaderboard-modal");
+  if (modal) modal.style.display = "none";
 });
 
 function triggerYachtzCelebration() {
