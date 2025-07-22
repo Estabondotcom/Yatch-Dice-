@@ -4,6 +4,7 @@ let gameStarted = false;
 let hasRolledThisTurn = false;
 let yachtzCount = 0;
 let loadingSavedGame = false;
+let gameOver = false; // ✅ Track end of game
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -18,7 +19,6 @@ let dice = [1, 1, 1, 1, 1];
 let locked = [false, false, false, false, false];
 let rollsLeft = 3;
 let scored = {};
-let gameOver = false;
 
 function saveGameState() {
   const state = {
@@ -31,7 +31,7 @@ function saveGameState() {
     gameStarted,
     hasRolledThisTurn,
     yachtzCount,
-    gameOver: Object.keys(scored).length >= 13
+    gameOver // ✅ use current flag value
   };
   localStorage.setItem("yachtzGame", JSON.stringify(state));
 }
@@ -60,7 +60,7 @@ function loadGameState() {
   if (gameOver) {
     gameStarted = false;
     rollBtn.textContent = "Start";
-    endModal.style.display = "none"; // ✅ suppress modal on load
+    endModal.style.display = "none"; // ✅ suppress modal
   } else {
     rollBtn.textContent = gameStarted
       ? confirmMode
@@ -267,14 +267,13 @@ function checkEndGame() {
   if (loadingSavedGame) return;
   if (Object.keys(scored).length < 13) return;
 
+  gameOver = true;
+
   const total = parseInt(document.getElementById("total-score").textContent, 10) || 0;
   finalScoreText.textContent = `You scored ${total} points!`;
   endModal.style.display = "flex";
 
-  // Set gameOver flag in storage explicitly
-  const current = JSON.parse(localStorage.getItem("yachtzGame")) || {};
-  current.gameOver = true;
-  localStorage.setItem("yachtzGame", JSON.stringify(current));
+  saveGameState(); // ✅ now saves gameOver: true
 }
 
 function startNewGame() {
