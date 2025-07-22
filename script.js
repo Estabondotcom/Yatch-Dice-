@@ -186,7 +186,8 @@ renderDice({ scramble: true });
 setTimeout(() => {
   updateScorePreviews();
   saveGameState();
-}, 2000);
+}, 3000);
+}
 
 function calculateUpperScore(n) {
   return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
