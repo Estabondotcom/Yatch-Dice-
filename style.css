@@ -469,6 +469,55 @@ td {
   cursor: pointer;
 }
 
+}
+
+#leaderboard-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.leaderboard-box {
+  background: black;
+  color: limegreen;
+  border: 4px double limegreen;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-family: "Press Start 2P", monospace;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 20px limegreen;
+}
+
+#leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+#leaderboard-list li {
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+
+#close-leaderboard {
+  font-family: "Press Start 2P", monospace;
+  background-color: limegreen;
+  color: black;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.7rem;
+
 #yachtz-zoom {
   position: fixed;
   top: 50%;
