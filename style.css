@@ -400,10 +400,9 @@ td {
 #game-complete-banner {
   position: fixed;
   width: 45vw;
-  height: 45vh;
+  height:36vh;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   background: rgba(34, 34, 34, 0.95);
   color: white;
   z-index: 3000;
