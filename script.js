@@ -3,6 +3,7 @@ let confirmMode = false;
 let gameStarted = false;
 let hasRolledThisTurn = false;
 let yachtzCount = 0;
+let loadingSavedGame = false; // ⛔ block end modal on load
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -38,6 +39,8 @@ function loadGameState() {
   const saved = localStorage.getItem("yachtzGame");
   if (!saved) return;
 
+  loadingSavedGame = true;
+
   const state = JSON.parse(saved);
   dice = state.dice || [1, 1, 1, 1, 1];
   locked = state.locked || [false, false, false, false, false];
@@ -55,15 +58,16 @@ function loadGameState() {
   if (Object.keys(scored).length >= 13) {
     gameStarted = false;
     rollBtn.textContent = "Start";
-    endModal.style.display = "none"; // ✅ prevent showing modal on reload
-    return;
+    endModal.style.display = "none"; // ✅ prevent modal on load
+  } else {
+    rollBtn.textContent = gameStarted
+      ? confirmMode
+        ? "Confirm"
+        : `Roll Dice (${rollsLeft} rolls left)`
+      : "Start";
   }
 
-  rollBtn.textContent = gameStarted
-    ? confirmMode
-      ? "Confirm"
-      : `Roll Dice (${rollsLeft} rolls left)`
-    : "Start";
+  loadingSavedGame = false;
 }
 
 // 🎲 Render Dice
@@ -265,6 +269,7 @@ function updateScorePreviews() {
 
 // ✅ End Game Modal
 function checkEndGame() {
+  if (loadingSavedGame) return; // ⛔ suppress during load
   if (!gameStarted) return;
   if (Object.keys(scored).length < 13) return;
 
@@ -304,7 +309,7 @@ function startNewGame() {
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", () => {
   startNewGame();
-  endModal.style.display = "none"; // ✅ close modal on button click
+  endModal.style.display = "none";
 });
 
 const saved = localStorage.getItem("yachtzGame");
