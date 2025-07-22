@@ -275,22 +275,13 @@ function showGameCompleteBanner(score) {
   const banner = document.createElement("div");
   banner.id = "game-complete-banner";
   banner.innerHTML = `
-    <strong>🎉 Game Complete!</strong> You scored <strong>${score}</strong> points.
-    <button id="start-new-banner">Start New Game</button>
-    <button id="post-score-banner">Post Score</button>
+    <div>
+      <h2>🎉 Game Complete!</h2>
+      <p>You scored <strong>${score}</strong> points.</p>
+      <button id="start-new-banner">Start New Game</button>
+      <button id="post-score-banner">Post Score</button>
+    </div>
   `;
-  Object.assign(banner.style, {
-    position: "fixed",
-    bottom: "20px",
-    left: "50%",
-    transform: "translateX(-50%)",
-    padding: "15px 20px",
-    background: "#333",
-    color: "#fff",
-    borderRadius: "8px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-    zIndex: "1000"
-  });
 
   document.body.appendChild(banner);
 
