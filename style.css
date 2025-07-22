@@ -175,18 +175,16 @@ td {
   background-color: #b7f5b2 !important;
 }
 #new-game-btn {
-  position: absolute;
-  top: 15px;
-  right: 5px;
-  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.1;
+  text-align: center;
+  border: 1px solid #F3DA10;
+  padding: 4px 8px;
   background-color: #0e3006;
   color: white;
-  border: 1px solid #F3DA10;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 #new-game-btn:hover {
