@@ -300,6 +300,7 @@ function showGameCompleteBanner(score) {
 
   if (banner && scoreText) {
     scoreText.textContent = score;
+    banner.style.display = "block"; // ← force visibility
     banner.classList.add("show");
   }
 
