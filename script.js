@@ -432,6 +432,14 @@ document.getElementById("post-score-banner").addEventListener("click", () => {
   alert("Score posting not implemented yet!"); // Placeholder action
 });
 
+document.getElementById("leaderboard-btn").addEventListener("click", () => {
+  document.getElementById("leaderboard-modal").style.display = "flex";
+});
+
+document.getElementById("close-leaderboard").addEventListener("click", () => {
+  document.getElementById("leaderboard-modal").style.display = "none";
+});
+
 function triggerYachtzCelebration() {
   // Fireworks
   for (let i = 0; i < 3; i++) {
