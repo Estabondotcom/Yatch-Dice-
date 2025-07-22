@@ -295,6 +295,7 @@ td {
   position: relative;
   z-index: 100;
   flex-wrap: nowrap;
+  border-radius: 10px;
 }
 
 .top-bar h1 {
