@@ -402,22 +402,44 @@ td {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90vw;            /* Use most of screen width on mobile */
-  max-width: 400px;       /* But cap it on desktop */
-  padding: 20px;
+  width: 90vw;
+  max-width: 350px;
   background: rgba(34, 34, 34, 0.95);
+  color: white;
+  padding: 20px;
   z-index: 3000;
-  border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
 }
 
 #game-complete-banner.show {
   display: flex;
   animation: fadeZoomIn 0.6s ease forwards;
+}
+
+#game-complete-banner h2 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+}
+
+#game-complete-banner p {
+  margin: 0 0 15px;
+  font-size: 1.1rem;
+}
+
+#game-complete-banner button {
+  margin: 5px;
+  font-size: 1rem;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #f8f8f8;
+  color: #000;
+  cursor: pointer;
 }
