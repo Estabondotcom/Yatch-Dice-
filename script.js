@@ -31,8 +31,6 @@ function saveGameState() {
     gameStarted,
     hasRolledThisTurn,
     yachtzCount,
-    gameOver // ✅ use current flag value
-  };
   localStorage.setItem("yachtzGame", JSON.stringify(state));
 }
 
