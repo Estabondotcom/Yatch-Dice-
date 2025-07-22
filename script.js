@@ -315,6 +315,13 @@ function showGameCompleteBanner(score) {
 
   document.body.appendChild(banner);
 
+  // 🎊 Confetti pop!
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
+
   document.getElementById("start-new-banner").addEventListener("click", () => {
     startNewGame();
     banner.remove();
