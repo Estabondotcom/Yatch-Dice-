@@ -397,11 +397,11 @@ td {
   }
 }
 
-#game-complete-banner {
+ #game-complete-banner {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* ✅ Centered horizontally and vertically */
+  transform: translate(-50%, -50%); /* ✅ center on screen */
   padding: 20px 30px;
   background: #222;
   color: white;
@@ -409,9 +409,7 @@ td {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   text-align: center;
-
   opacity: 0;
   animation: fadeZoomIn 0.6s ease forwards;
-  animation-fill-mode: forwards;
 }
 
