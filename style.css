@@ -306,3 +306,31 @@ td {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+#game-complete-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 30px;
+  background: #222;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  text-align: center;
+}
+
+#game-complete-banner button {
+  margin: 10px 8px 0;
+  padding: 8px 14px;
+  background: #444;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#game-complete-banner button:hover {
+  background: #666;
+}
