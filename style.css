@@ -508,3 +508,15 @@ td {
 #leaderboard-btn:hover {
   background-color: #145117;
 }
+.left-buttons,
+.right-buttons {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.center-title {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+}
