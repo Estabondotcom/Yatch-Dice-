@@ -295,8 +295,13 @@ function startNewGame() {
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
-loadGameState();
-startNewGame();
+const saved = localStorage.getItem("yachtzGame");
+
+if (saved) {
+  loadGameState();
+} else {
+  startNewGame();
+}
 
 
 // Confirm Modal
