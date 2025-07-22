@@ -508,15 +508,34 @@ td {
 #leaderboard-btn:hover {
   background-color: #145117;
 }
+.top-bar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  background-color: #5e201e;
+  z-index: 100;
+  border-radius: 10px;
+  margin-bottom: 3px;
+}
+
 .left-buttons,
 .right-buttons {
   display: flex;
   gap: 6px;
-  flex: 0 0 auto;
 }
 
 .center-title {
-  flex: 1;
-  text-align: center;
-  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Bangers', cursive;
+  font-size: 2.4em;
+  color: #F3DA10;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px #0e3006;
+  white-space: nowrap;
+  pointer-events: none; /* Optional: prevents accidental clicks */
 }
