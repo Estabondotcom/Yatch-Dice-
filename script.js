@@ -332,3 +332,27 @@ if (saved) {
 } else {
   startNewGame();
 }
+// Hook up top bar buttons
+document.getElementById("new-game-btn").addEventListener("click", () => {
+  const popup = document.getElementById("confirm-popup");
+  if (popup) popup.style.display = "block";
+});
+
+document.getElementById("rules-btn").addEventListener("click", () => {
+  const modal = document.getElementById("rules-modal");
+  if (modal) modal.style.display = "block";
+});
+
+document.getElementById("close-rules").addEventListener("click", () => {
+  const modal = document.getElementById("rules-modal");
+  if (modal) modal.style.display = "none";
+});
+
+document.getElementById("confirm-yes").addEventListener("click", () => {
+  startNewGame();
+  document.getElementById("confirm-popup").style.display = "none";
+});
+
+document.getElementById("confirm-cancel").addEventListener("click", () => {
+  document.getElementById("confirm-popup").style.display = "none";
+});
