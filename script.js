@@ -56,6 +56,10 @@ function loadGameState() {
       ? "Confirm"
       : `Roll Dice (${rollsLeft} rolls left)`
     : "Start";
+  // If game is already over, don't auto-trigger the modal
+if (Object.keys(scored).length >= 13) {
+  gameStarted = false;
+  rollBtn.textContent = "Start";
 }
 
 // 🎲 Render Dice
