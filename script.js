@@ -144,8 +144,12 @@ if (!gameStarted) {
         const scoreCell = document.getElementById("score-yahtzee");
         scoreCell.textContent = newScore;
         scoreCell.className = "filled";
+
+        triggerYachtzCelebration();
       }
-    } else {
+    } 
+    
+    else {
       const score = parseInt(document.getElementById("score-" + category).textContent, 10);
       scored[category] = score;
 
@@ -403,3 +407,28 @@ document.getElementById("start-new-banner").addEventListener("click", () => {
 document.getElementById("post-score-banner").addEventListener("click", () => {
   alert("Score posting not implemented yet!"); // Placeholder action
 });
+
+function triggerYachtzCelebration() {
+  // Fireworks
+  for (let i = 0; i < 3; i++) {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { x: Math.random(), y: Math.random() * 0.8 },
+    });
+  }
+
+  // Animate YACHTZ text
+  const banner = document.getElementById("yachtz-zoom");
+  banner.classList.remove("yachtz-active"); // reset if still animating
+  void banner.offsetWidth; // force reflow
+  banner.classList.add("yachtz-active");
+
+  // Add rainbow effect to dice temporarily
+  const diceEls = document.querySelectorAll(".die");
+  diceEls.forEach(die => die.classList.add("rainbow"));
+
+  setTimeout(() => {
+    diceEls.forEach(die => die.classList.remove("rainbow"));
+  }, 2000);
+}
