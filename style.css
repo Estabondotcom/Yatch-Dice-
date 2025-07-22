@@ -26,7 +26,7 @@ html, body {
 .left-panel {
   flex: 1;
   overflow-y: auto;
-  margin-bottom: 10px; /* space above dice */
+  margin-bottom: 5px; /* space above dice */
   max-height: 100%;
   width: 100%;
   box-sizing: border-box;
@@ -57,7 +57,7 @@ html, body {
 }
 
 .right-panel button {
-  margin-top: 10px;
+  margin-top: 5px;
   width: 90%;
   padding: 10px 15px;
   font-size: 1rem;
@@ -296,6 +296,7 @@ td {
   z-index: 100;
   flex-wrap: nowrap;
   border-radius: 10px;
+  margin-bottom: 3px;
 }
 
 .top-bar h1 {
