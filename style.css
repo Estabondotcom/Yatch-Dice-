@@ -517,6 +517,20 @@ td {
   cursor: pointer;
   font-size: 0.7rem;
 }
+.square-separator {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.square {
+  width: 10px;
+  height: 10px;
+  background-color: limegreen;
+  border: 1px solid #00ff00;
+  box-shadow: 0 0 4px limegreen;
+}
 
 #yachtz-zoom {
   position: fixed;
