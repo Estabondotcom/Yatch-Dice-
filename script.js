@@ -31,6 +31,7 @@ function saveGameState() {
     gameStarted,
     hasRolledThisTurn,
     yachtzCount,
+  };
   localStorage.setItem("yachtzGame", JSON.stringify(state));
 }
 
