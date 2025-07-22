@@ -52,18 +52,20 @@ function loadGameState() {
   renderDice();
   updateScorePreviews();
 
-  // ✅ If game is already over, don't trigger modal or resume as active
   if (Object.keys(scored).length >= 13) {
     gameStarted = false;
     rollBtn.textContent = "Start";
-  } else {
-    rollBtn.textContent = gameStarted
-      ? confirmMode
-        ? "Confirm"
-        : `Roll Dice (${rollsLeft} rolls left)`
-      : "Start";
+    endModal.style.display = "none"; // ✅ prevent showing modal on reload
+    return;
   }
+
+  rollBtn.textContent = gameStarted
+    ? confirmMode
+      ? "Confirm"
+      : `Roll Dice (${rollsLeft} rolls left)`
+    : "Start";
 }
+
 // 🎲 Render Dice
 function renderDice() {
   diceContainer.innerHTML = "";
@@ -300,15 +302,17 @@ function startNewGame() {
 
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
-restartBtn.addEventListener("click", startNewGame);
-const saved = localStorage.getItem("yachtzGame");
+restartBtn.addEventListener("click", () => {
+  startNewGame();
+  endModal.style.display = "none"; // ✅ close modal on button click
+});
 
+const saved = localStorage.getItem("yachtzGame");
 if (saved) {
   loadGameState();
 } else {
   startNewGame();
 }
-
 
 // Confirm Modal
 document.getElementById("new-game-btn").addEventListener("click", () => {
