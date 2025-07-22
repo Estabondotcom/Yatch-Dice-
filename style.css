@@ -272,10 +272,10 @@ td {
   padding: 5px;
   border-radius: 10px;
   border: 2px solid #F3DA10;
-  width: 90vw;             /* fill more horizontal space */
-  max-width: 95vw;        /* optional: limit on large screens */
+  width: 95vw;             /* fill more horizontal space */
+  max-width: 98vw;        /* optional: limit on large screens */
   height: auto;
-  max-height: 95vh;        /* fill screen, but leave some margin */
+  max-height: 98vh;        /* fill screen, but leave some margin */
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: left;
