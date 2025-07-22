@@ -139,7 +139,6 @@ td {
 
 #scorecard .scorable:not(.preview):not(.filled):not(.filled-zero) {
   pointer-events: none;
-  opacity: 0.5;
 }
 
 .preview {
