@@ -265,7 +265,16 @@ function updateScorePreviews() {
 
 function checkEndGame() {
   if (loadingSavedGame) return;
-  if (Object.keys(scored).length < 13) return;
+
+  const requiredCategories = [
+    "ones", "twos", "threes", "fours", "fives", "sixes",
+    "threeKind", "fourKind", "fullHouse", "smallStraight",
+    "largeStraight", "yahtzee", "chance"
+  ];
+
+  const allScored = requiredCategories.every(cat => scored[cat] !== undefined);
+
+  if (!allScored) return;
 
   gameOver = true;
 
@@ -273,9 +282,8 @@ function checkEndGame() {
   finalScoreText.textContent = `You scored ${total} points!`;
   endModal.style.display = "flex";
 
-  saveGameState(); // ✅ now saves gameOver: true
+  saveGameState();
 }
-
 function startNewGame() {
   pendingCategory = null;
   confirmMode = false;
