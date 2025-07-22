@@ -492,6 +492,7 @@ td {
   animation: rainbowShift 2s linear infinite;
 }
 #leaderboard-btn {
+  display: absolute;
   background-color: #0e3006;
   color: white;
   border: 1px solid yellow;
