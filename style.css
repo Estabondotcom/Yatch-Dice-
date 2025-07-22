@@ -345,7 +345,7 @@ td {
 #help-btn {
   position: absolute;
   top: 14px;
-  left: 73px;
+  left: 68px;
   padding: 3px 7px;
   font-size: 1rem;
   background-color: #0e3006;
@@ -498,9 +498,9 @@ td {
   border: 1px solid yellow;
   border-radius: 6px;
   font-size: 1rem;
-  padding: 4px 4px;
-  margin-left: 1px;
-  margin-right: 2px;
+  padding: 3px 3px;
+  margin-left: 2px;
+  margin-right: 4px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
