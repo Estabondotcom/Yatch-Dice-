@@ -356,3 +356,13 @@ document.getElementById("confirm-yes").addEventListener("click", () => {
 document.getElementById("confirm-cancel").addEventListener("click", () => {
   document.getElementById("confirm-popup").style.display = "none";
 });
+
+document.getElementById("help-btn").addEventListener("click", () => {
+  const modal = document.getElementById("help-modal");
+  if (modal) modal.style.display = "block";
+});
+
+document.getElementById("close-help").addEventListener("click", () => {
+  const modal = document.getElementById("help-modal");
+  if (modal) modal.style.display = "none";
+});
