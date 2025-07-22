@@ -263,7 +263,7 @@ td {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 2000;
-  padding: 20px; /* allows inner box breathing room on small screens */
+  padding: 5px; /* allows inner box breathing room on small screens */
   box-sizing: border-box;
 }
 
