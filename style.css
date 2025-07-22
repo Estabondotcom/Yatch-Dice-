@@ -175,7 +175,7 @@ td {
 }
 #new-game-btn {
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 5px;
   padding: 6px 10px;
   background-color: #0e3006;
@@ -237,9 +237,9 @@ td {
 }
 #rules-btn {
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 5px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   background-color: #0e3006;
   color: white;
   border: none;
@@ -362,7 +362,7 @@ td {
 
 #help-btn {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 73px;
   padding: 3px 7px;
   font-size: 1rem;
