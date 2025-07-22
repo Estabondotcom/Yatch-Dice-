@@ -16,7 +16,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseConfig = { /* your config object here */ };
 firebase.initializeApp(firebaseConfig);
 
 // Initialize Firestore
