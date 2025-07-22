@@ -238,7 +238,7 @@ td {
 #rules-btn {
   position: absolute;
   top: 10px;
-  left: 10px;
+  left: 5px
   padding: 8px 12px;
   background-color: #0e3006;
   color: white;
@@ -363,13 +363,14 @@ td {
 #help-btn {
   position: absolute;
   top: 10px;
-  left: 85px;
-  padding: 6px 10px;
+  left: 80px;
+  padding: 5px 10px;
   font-size: 1rem;
-  background-color: #ffe100;
+  background-color: #0e3006;
   border: 1px solid #888;
   border-radius: 50%;
   cursor: pointer;
   font-weight: bold;
+  color: white;
   z-index: 1001;
 }
