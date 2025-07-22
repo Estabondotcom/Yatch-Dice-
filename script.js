@@ -348,6 +348,7 @@ function startNewGame() {
     banner.classList.remove("show");
     banner.style.display = "none"; // just in case
   }
+}
 
 rollBtn.addEventListener("click", rollOrConfirm);
 
