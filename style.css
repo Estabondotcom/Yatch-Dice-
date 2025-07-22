@@ -12,10 +12,13 @@ html, body {
 }
 
 h1 {
-  margin: 10px 0;
-  font-size: 1.8em;
+  font-family: 'Bangers', cursive;
+  font-size: 2.4em;
+  color: #174a00;
+  letter-spacing: 1px;
+  margin: 12px 0;
+  text-transform: uppercase;
 }
-
 /* ========== Main Layout Container ========== */
 .game-layout {
   display: flex;
