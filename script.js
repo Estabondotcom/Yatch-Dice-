@@ -5,6 +5,16 @@ let hasRolledThisTurn = false;
 let yachtzCount = 0;
 let loadingSavedGame = false;
 let gameOver = false;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAnPIM8uH5sLkWxPSu_qa-s3ZxZF09BFT0",
+  authDomain: "the-yachtz.firebaseapp.com",
+  projectId: "the-yachtz",
+  storageBucket: "the-yachtz.firebasestorage.app",
+  messagingSenderId: "696042753866",
+  appId: "1:696042753866:web:54a40aeabae6f156febbb3"
+};
+
 // Initialize Firebase
 const firebaseConfig = { /* your config object here */ };
 firebase.initializeApp(firebaseConfig);
@@ -487,29 +497,55 @@ function triggerYachtzCelebration() {
     diceEls.forEach(die => die.classList.remove("rainbow"));
   }, 2000);
 }
-// Submit a new score
-async function submitScore(name, score) {
-  await db.collection("leaderboard").add({
-    name,
-    score,
+// POST SCORE FUNCTION
+function promptAndPostScore(finalScore) {
+  const name = prompt("Enter your initials for the leaderboard (3 letters):", "AAA");
+  if (!name || name.length !== 3) return alert("Score not submitted. Must be 3 letters.");
+
+  db.collection("leaderboard").add({
+    name: name.toUpperCase(),
+    score: finalScore,
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    loadLeaderboard();
+  }).catch((error) => {
+    console.error("Error posting score:", error);
   });
 }
 
-// Get top 10 scores
-async function getTopScores() {
-  const snapshot = await db.collection("leaderboard")
+// LOAD LEADERBOARD FUNCTION
+function loadLeaderboard() {
+  const list = document.getElementById("leaderboard-list");
+  list.innerHTML = `<li>Loading...</li>`;
+
+  db.collection("leaderboard")
     .orderBy("score", "desc")
     .limit(10)
-    .get();
-
-  const scores = snapshot.docs.map(doc => doc.data());
-  displayLeaderboard(scores);
+    .get()
+    .then(snapshot => {
+      list.innerHTML = "";
+      snapshot.forEach(doc => {
+        const entry = doc.data();
+        const li = document.createElement("li");
+        li.textContent = `${entry.name} — ${entry.score}`;
+        list.appendChild(li);
+      });
+    }).catch((error) => {
+      list.innerHTML = `<li>Error loading leaderboard</li>`;
+      console.error("Error getting leaderboard:", error);
+    });
 }
+document.getElementById("leaderboard-btn").addEventListener("click", () => {
+  loadLeaderboard();
+  document.getElementById("leaderboard-modal").style.display = "block";
+});
 
-// Display leaderboard
-function displayLeaderboard(scores) {
-  const leaderboard = document.getElementById("leaderboard");
-  leaderboard.innerHTML = scores.map(s => `<div>${s.name}: ${s.score}</div>`).join("");
-}
+document.getElementById("close-leaderboard").addEventListener("click", () => {
+  document.getElementById("leaderboard-modal").style.display = "none";
+});
+
+document.getElementById("post-score-banner").addEventListener("click", () => {
+  const score = parseInt(document.getElementById("total-score").textContent);
+  promptAndPostScore(score);
+});
 
