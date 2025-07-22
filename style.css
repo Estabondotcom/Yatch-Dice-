@@ -206,11 +206,12 @@ td {
 }
 
 .confirm-box {
-  background: white;
+  background: #d4caa9;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
   max-width: 90%;
+  border: 2px solid #F3DA10;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -268,7 +269,7 @@ td {
 }
 
 .rules-box {
-  background: white;
+  background: #d4caa9;
   padding: 5px;
   border-radius: 10px;
   border: 2px solid #F3DA10;
@@ -358,9 +359,10 @@ td {
 }
 
 .help-box {
-  background: white;
+  background: #d4caa9;
   padding: 20px;
   border-radius: 10px;
+  border: 2px solid #F3DA10;
   width: 80%;
   max-width: 400px;
   text-align: left;
