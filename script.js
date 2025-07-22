@@ -443,6 +443,20 @@ document.getElementById("close-leaderboard").addEventListener("click", () => {
   if (modal) modal.style.display = "none";
 });
 
+function generateSeparatorSquares(count = 20) {
+  const container = document.querySelector(".square-separator");
+  if (!container) return;
+
+  for (let i = 0; i < count; i++) {
+    const square = document.createElement("div");
+    square.className = "square";
+    container.appendChild(square);
+  }
+}
+
+// Run when DOM is ready
+generateSeparatorSquares();
+
 function triggerYachtzCelebration() {
   // Fireworks
   for (let i = 0; i < 3; i++) {
