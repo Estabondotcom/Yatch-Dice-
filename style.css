@@ -475,7 +475,7 @@ td {
   left: 5%;
   width: 90vw;
   height: 90vh;
-  background: rgba(0, 0, 0, 0.85);
+  background: none;
   display: none;
   justify-content: center;
   align-items: center;
@@ -492,6 +492,7 @@ td {
   font-family: "Press Start 2P", monospace;
   width: 90%;
   max-width: 400px;
+  height: 75%;
   box-shadow: 0 0 20px limegreen;
 }
 
