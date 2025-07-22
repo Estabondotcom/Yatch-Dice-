@@ -252,35 +252,19 @@ td {
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-#rules-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 2000;
-  padding: 5px; /* allows inner box breathing room on small screens */
-  box-sizing: border-box;
-  margin-right: 5px;
-}
-
 .rules-box {
   background: white;
-  padding: 25px;
+  padding: 20px;
   border-radius: 10px;
   border: 2px solid #F3DA10;
-  max-width: 90%;
-  width: 350px;
-  max-height: 90vh;          /* ✅ don't exceed screen height */
-  overflow-y: auto;          /* ✅ scrolls if content is too tall */
+  width: 90vw;             /* fill more horizontal space */
+  max-width: 500px;        /* optional: limit on large screens */
+  height: auto;
+  max-height: 90vh;        /* fill screen, but leave some margin */
+  overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: left;
   box-sizing: border-box;
-  margin-right: 5px;
 }
 
 #close-rules {
