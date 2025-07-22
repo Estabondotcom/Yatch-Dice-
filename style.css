@@ -66,6 +66,7 @@ html, body {
   background-color: #0e3006;
   color: white;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 button:disabled {
@@ -185,7 +186,7 @@ td {
   font-size: 0.9rem;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 #new-game-btn:hover {
@@ -248,7 +249,7 @@ td {
   font-size: 0.9rem;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 #rules-modal {
@@ -361,7 +362,7 @@ td {
   width: 80%;
   max-width: 400px;
   text-align: left;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
 #help-btn {
@@ -377,5 +378,5 @@ td {
   font-weight: bold;
   color: white;
   z-index: 1001;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
