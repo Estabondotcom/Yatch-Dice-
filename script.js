@@ -258,20 +258,18 @@ scorecard.addEventListener("click", (e) => {
   const category = labelCell.dataset.category;
   if (scored[category]) return;
 
- if (pendingCategory === category) {
-  // 👈 Player clicked same category again — cancel confirm mode
-  const old = document.getElementById("score-" + pendingCategory);
-  old.textContent = "";
-  old.className = "";
+if (pendingCategory === category) {
+  // 🔄 Cancel confirmation, but restore preview
+  const scoreCell = document.getElementById("score-" + category);
+  const previewScore = calculateScoreForCategory(category);
+  scoreCell.textContent = previewScore;
+  scoreCell.className = "preview"; // Keep it as a preview
+
   pendingCategory = null;
   confirmMode = false;
   rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
   saveGameState();
   return;
-} else if (pendingCategory) {
-  // 👈 Player clicked a different category — unmark the previous one
-  const old = document.getElementById("score-" + pendingCategory);
-  old.className = "preview";
 }
   pendingCategory = category;
   const score = calculateScoreForCategory(category);
