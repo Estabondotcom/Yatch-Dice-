@@ -485,8 +485,11 @@ function triggerYachtzCelebration() {
 }
 // POST SCORE FUNCTION
 function promptAndPostScore(finalScore) {
-  const name = prompt("Enter your initials for the leaderboard (3 letters):", "AAA");
-  if (!name || name.length !== 3) return alert("Score not submitted. Must be 3 letters.");
+  const name = prompt("Enter a name for the leaderboard (up to 5 characters):", "PLAYER");
+if (!name || name.length > 5) {
+  alert("Score not submitted. Name must be 1 to 5 characters.");
+  return;
+}
 
   db.collection("leaderboard").add({
     name: name.toUpperCase(),
