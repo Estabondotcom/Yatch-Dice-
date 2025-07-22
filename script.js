@@ -5,6 +5,12 @@ let hasRolledThisTurn = false;
 let yachtzCount = 0;
 let loadingSavedGame = false;
 let gameOver = false;
+// Initialize Firebase
+const firebaseConfig = { /* your config object here */ };
+firebase.initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = firebase.firestore();
 
 const diceContainer = document.getElementById("dice-container");
 const rollBtn = document.getElementById("roll-btn");
@@ -481,3 +487,29 @@ function triggerYachtzCelebration() {
     diceEls.forEach(die => die.classList.remove("rainbow"));
   }, 2000);
 }
+// Submit a new score
+async function submitScore(name, score) {
+  await db.collection("leaderboard").add({
+    name,
+    score,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+
+// Get top 10 scores
+async function getTopScores() {
+  const snapshot = await db.collection("leaderboard")
+    .orderBy("score", "desc")
+    .limit(10)
+    .get();
+
+  const scores = snapshot.docs.map(doc => doc.data());
+  displayLeaderboard(scores);
+}
+
+// Display leaderboard
+function displayLeaderboard(scores) {
+  const leaderboard = document.getElementById("leaderboard");
+  leaderboard.innerHTML = scores.map(s => `<div>${s.name}: ${s.score}</div>`).join("");
+}
+
