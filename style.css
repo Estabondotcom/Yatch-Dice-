@@ -252,6 +252,21 @@ td {
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
+#rules-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
 .rules-box {
   background: white;
   padding: 20px;
