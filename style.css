@@ -397,3 +397,14 @@ td {
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+@keyframes roll-combined {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.2) rotate(10deg); }
+  50%  { transform: scale(1.1) rotate(-10deg); }
+  75%  { transform: scale(1.15) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.die.rolling {
+  animation: roll-combined 0.5s ease;
+}
