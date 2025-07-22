@@ -4,17 +4,12 @@ let gameStarted = false;
 let hasRolledThisTurn = false;
 let yachtzCount = 0;
 let loadingSavedGame = false;
-let gameOver = false; // ✅ Track end of game
+let gameOver = false;
 
-// DOM Elements
 const diceContainer = document.getElementById("dice-container");
 const rollBtn = document.getElementById("roll-btn");
 const scorecard = document.getElementById("scorecard");
-const endModal = document.getElementById("end-modal");
-const finalScoreText = document.getElementById("final-score");
-const restartBtn = document.getElementById("restart-btn");
 
-// Game State
 let dice = [1, 1, 1, 1, 1];
 let locked = [false, false, false, false, false];
 let rollsLeft = 3;
@@ -31,6 +26,7 @@ function saveGameState() {
     gameStarted,
     hasRolledThisTurn,
     yachtzCount,
+    gameOver
   };
   localStorage.setItem("yachtzGame", JSON.stringify(state));
 }
@@ -56,17 +52,11 @@ function loadGameState() {
   renderDice();
   updateScorePreviews();
 
-  if (gameOver) {
-    gameStarted = false;
-    rollBtn.textContent = "Start";
-    endModal.style.display = "none"; // ✅ suppress modal
-  } else {
-    rollBtn.textContent = gameStarted
-      ? confirmMode
-        ? "Confirm"
-        : `Roll Dice (${rollsLeft} rolls left)`
-      : "Start";
-  }
+  rollBtn.textContent = gameStarted
+    ? confirmMode
+      ? "Confirm"
+      : `Roll Dice (${rollsLeft} rolls left)`
+    : "Start";
 
   loadingSavedGame = false;
 }
@@ -272,17 +262,48 @@ function checkEndGame() {
   ];
 
   const allScored = requiredCategories.every(cat => scored[cat] !== undefined);
-
   if (!allScored) return;
 
   gameOver = true;
 
   const total = parseInt(document.getElementById("total-score").textContent, 10) || 0;
-  finalScoreText.textContent = `You scored ${total} points!`;
-  endModal.style.display = "flex";
-
+  showGameCompleteBanner(total);
   saveGameState();
 }
+
+function showGameCompleteBanner(score) {
+  const banner = document.createElement("div");
+  banner.id = "game-complete-banner";
+  banner.innerHTML = `
+    <strong>🎉 Game Complete!</strong> You scored <strong>${score}</strong> points.
+    <button id="start-new-banner">Start New Game</button>
+    <button id="post-score-banner">Post Score</button>
+  `;
+  Object.assign(banner.style, {
+    position: "fixed",
+    bottom: "20px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    padding: "15px 20px",
+    background: "#333",
+    color: "#fff",
+    borderRadius: "8px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+    zIndex: "1000"
+  });
+
+  document.body.appendChild(banner);
+
+  document.getElementById("start-new-banner").addEventListener("click", () => {
+    startNewGame();
+    banner.remove();
+  });
+
+  document.getElementById("post-score-banner").addEventListener("click", () => {
+    alert("Feature coming soon: Post to leaderboard!");
+  });
+}
+
 function startNewGame() {
   pendingCategory = null;
   confirmMode = false;
@@ -303,19 +324,16 @@ function startNewGame() {
   document.getElementById("upper-bonus").textContent = "0";
   document.getElementById("total-score").textContent = "0";
   rollBtn.textContent = "Start";
-  endModal.style.display = "none";
 
   localStorage.removeItem("yachtzGame");
   renderDice();
   saveGameState();
+
+  const banner = document.getElementById("game-complete-banner");
+  if (banner) banner.remove();
 }
 
-// Init
 rollBtn.addEventListener("click", rollOrConfirm);
-restartBtn.addEventListener("click", () => {
-  startNewGame();
-  endModal.style.display = "none";
-});
 
 const saved = localStorage.getItem("yachtzGame");
 if (saved) {
@@ -323,23 +341,3 @@ if (saved) {
 } else {
   startNewGame();
 }
-
-// Confirm Modal
-document.getElementById("new-game-btn").addEventListener("click", () => {
-  document.getElementById("confirm-popup").style.display = "flex";
-});
-document.getElementById("confirm-yes").addEventListener("click", () => {
-  startNewGame();
-  document.getElementById("confirm-popup").style.display = "none";
-});
-document.getElementById("confirm-cancel").addEventListener("click", () => {
-  document.getElementById("confirm-popup").style.display = "none";
-});
-
-// Rules Modal
-document.getElementById("rules-btn").addEventListener("click", () => {
-  document.getElementById("rules-modal").style.display = "flex";
-});
-document.getElementById("close-rules").addEventListener("click", () => {
-  document.getElementById("rules-modal").style.display = "none";
-});
