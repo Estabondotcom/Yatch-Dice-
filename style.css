@@ -399,14 +399,16 @@ td {
 
 #game-complete-banner {
   position: fixed;
-  width: 90vw;
-  max-width: 350px;
+  width: 36vw;
+  height:36vw;
+  margin-top: 32vh;
+  margin-bottom: 32vh;
+  margin-left: 32vw;
+  margin-right:32vw;
   background: rgba(34, 34, 34, 0.95);
   color: white;
-  padding: 20px;
   z-index: 3000;
   display: none;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
