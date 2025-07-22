@@ -295,8 +295,9 @@ function startNewGame() {
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
-startNewGame();
 loadGameState();
+startNewGame();
+
 
 // Confirm Modal
 document.getElementById("new-game-btn").addEventListener("click", () => {
