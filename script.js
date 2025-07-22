@@ -331,7 +331,7 @@ document.getElementById("confirm-cancel").addEventListener("click", () => {
   document.getElementById("confirm-popup").style.display = "none";
 });
 
-// Rules Modal
+// Rules Mod
 document.getElementById("rules-btn").addEventListener("click", () => {
   document.getElementById("rules-modal").style.display = "flex";
 });
