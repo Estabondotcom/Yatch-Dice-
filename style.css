@@ -171,11 +171,12 @@ td {
 }
 
 #total-score,
-#label-total-score {
+#label-total-score{
   background-color: #b7f5b2 !important;
+  
 }
 #new-game-btn {
-  display: absolute;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -186,6 +187,8 @@ td {
   background-color: #0e3006;
   color: white;
   border-radius: 6px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 #new-game-btn:hover {
