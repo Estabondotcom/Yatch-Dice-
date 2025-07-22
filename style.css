@@ -21,7 +21,97 @@ html, body {
   gap: 10px;
   box-sizing: border-box;
 }
+/* ===== Top Bar Layout ===== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  background-color: #5e201e;
+  border-radius: 10px;
+  margin-bottom: 3px;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
 
+/* Left and right button groups */
+.left-buttons,
+.right-buttons {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+/* Make button widths consistent */
+#rules-btn,
+#new-game-btn {
+  min-width: 80px;
+}
+
+/* Title wrapper ensures title centers between left and right */
+.title-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  pointer-events: none; /* prevent overlap issues */
+}
+
+/* The title itself */
+.center-title {
+  font-family: 'Bangers', cursive;
+  font-size: 2.4em;
+  color: #F3DA10;
+  text-shadow: 2px 2px #0e3006;
+  margin: 0;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== Button Styles (reusable) ===== */
+#rules-btn,
+#help-btn,
+#leaderboard-btn,
+#new-game-btn {
+  background-color: #0e3006;
+  color: white;
+  border: 1px solid #F3DA10;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+
+/* Trophy button style */
+#leaderboard-btn {
+  padding: 6px 8px;
+  font-size: 1.2rem;
+}
+
+/* Help button */
+#help-btn {
+  padding: 3px 7px;
+  font-size: 1rem;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* Rules and New Game */
+#rules-btn {
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+/* New Game stacked text */
+#new-game-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.1;
+  text-align: center;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+}
 /* ========== Scrollable Scorecard Panel ========== */
 .left-panel {
   flex: 1;
@@ -175,25 +265,6 @@ td {
   background-color: #b7f5b2 !important;
   
 }
-#new-game-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.1;
-  text-align: center;
-  border: 1px solid #F3DA10;
-  padding: 4px 8px;
-  background-color: #0e3006;
-  color: white;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-#new-game-btn:hover {
-  background-color: #145117;
-}
 #confirm-popup {
   position: fixed;
   top: 0;
@@ -241,20 +312,6 @@ td {
   background-color: #631111;
   color: white;
 }
-#rules-btn {
-  position: absolute;
-  top: 15px;
-  left: 5px;
-  padding: 6px 10px;
-  background-color: #0e3006;
-  color: white;
-  border: 1px solid #F3DA10;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
 
 #rules-modal {
   position: fixed;
@@ -296,30 +353,6 @@ td {
   cursor: pointer;
   width: 100%;
 }
-.top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 8px;
-  background-color: #5e201e;
-  position: relative;
-  z-index: 100;
-  flex-wrap: nowrap;
-  border-radius: 10px;
-  margin-bottom: 3px;
-}
-
-.top-bar h1 {
-  flex-grow: 1;
-  margin: 0;
-  font-family: 'Bangers', cursive;
-  font-size: 2.4em;
-  color: #F3DA10;
-  text-align: center;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-shadow: 2px 2px #0e3006;
-}
 
   #help-modal {
   position: fixed;
@@ -345,21 +378,6 @@ td {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-#help-btn {
-  position: absolute;
-  top: 14px;
-  left: 68px;
-  padding: 3px 7px;
-  font-size: 1rem;
-  background-color: #0e3006;
-  border: 1px solid #F3DA10;
-  border-radius: 50%;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  z-index: 1001;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
 #close-help {
   margin-top: 15px;
   padding: 8px 12px;
@@ -493,55 +511,4 @@ td {
 
 .rainbow {
   animation: rainbowShift 2s linear infinite;
-}
-#leaderboard-btn {
-  display: absolute;
-  background-color: #0e3006;
-  color: white;
-  border: 1px solid yellow;
-  border-radius: 6px;
-  font-size: 1rem;
-  padding: 3px 3px;
-  margin-left: 2px;
-  margin-right: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-#leaderboard-btn:hover {
-  background-color: #145117;
-}
-.top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 8px;
-  background-color: #5e201e;
-  z-index: 100;
-  border-radius: 10px;
-  margin-bottom: 3px;
-}
-
-.left-buttons,
-.right-buttons {
-  display: flex;
-  gap: 6px;
-  flex: 0 0 auto;
-}
-
-.title-wrapper {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.center-title {
-  font-family: 'Bangers', cursive;
-  font-size: 2.4em;
-  color: #F3DA10;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-shadow: 2px 2px #0e3006;
-  margin: 0;
-  white-space: nowrap;
 }
