@@ -440,10 +440,6 @@ document.getElementById("start-new-banner").addEventListener("click", () => {
   document.getElementById("game-complete-banner").classList.remove("show");
 });
 
-document.getElementById("post-score-banner").addEventListener("click", () => {
-  alert("Score posting not implemented yet!"); // Placeholder action
-});
-
 document.getElementById("close-leaderboard").addEventListener("click", () => {
   const modal = document.getElementById("leaderboard-modal");
   if (modal) modal.style.display = "none";
