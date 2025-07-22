@@ -302,31 +302,19 @@ function checkEndGame() {
 }
 
 function showGameCompleteBanner(score) {
-  const banner = document.createElement("div");
-  banner.id = "game-complete-banner";
-  banner.innerHTML = `
-  <h2>🎉 Game Complete!</h2>
-  <p>You scored <strong>${score}</strong> points.</p>
-  <button id="start-new-banner">Start New Game</button>
-  <button id="post-score-banner">Post Score</button>
-`;
+  const banner = document.getElementById("game-complete-banner");
+  const scoreText = document.getElementById("final-score-text");
 
-  document.body.appendChild(banner);
+  if (banner && scoreText) {
+    scoreText.textContent = score;
+    banner.classList.add("show");
+  }
 
-  // 🎊 Confetti pop!
+  // 🎊 Confetti!
   confetti({
     particleCount: 100,
     spread: 70,
     origin: { y: 0.6 }
-  });
-
-  document.getElementById("start-new-banner").addEventListener("click", () => {
-    startNewGame();
-    banner.remove();
-  });
-
-  document.getElementById("post-score-banner").addEventListener("click", () => {
-    alert("Feature coming soon: Post to leaderboard!");
   });
 }
 
@@ -356,8 +344,10 @@ function startNewGame() {
   saveGameState();
 
   const banner = document.getElementById("game-complete-banner");
-  if (banner) banner.remove();
-}
+  if (banner) {
+    banner.classList.remove("show");
+    banner.style.display = "none"; // just in case
+  }
 
 rollBtn.addEventListener("click", rollOrConfirm);
 
