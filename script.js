@@ -535,6 +535,14 @@ document.getElementById("close-leaderboard").addEventListener("click", () => {
 
 document.getElementById("post-score-banner").addEventListener("click", () => {
   const score = parseInt(document.getElementById("total-score").textContent);
+
   promptAndPostScore(score);
+
+  const btn = document.getElementById("post-score-banner");
+  btn.disabled = true;
+  btn.style.opacity = "0.5";
+  btn.style.cursor = "not-allowed";
+  btn.textContent = "Score Posted";
 });
+
 
