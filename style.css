@@ -181,7 +181,7 @@ td {
   padding: 6px 10px;
   background-color: #0e3006;
   color: white;
-  border: none;
+  border: 2px solid #F3DA10;
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -246,7 +246,7 @@ td {
   padding: 6px 10px;
   background-color: #0e3006;
   color: white;
-  border: none;
+  border: 2px solid #F3DA10;
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -350,7 +350,7 @@ td {
   padding: 3px 7px;
   font-size: 1rem;
   background-color: #0e3006;
-  border: 1px solid #000;
+  border: 2px solid #F3DA10;
   border-radius: 50%;
   cursor: pointer;
   font-weight: bold;
