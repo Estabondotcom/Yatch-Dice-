@@ -403,10 +403,11 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 35vh;
+  width: 35vw;
   background: rgba(34, 34, 34, 0.95);
   z-index: 3000;
   display: none;
-  flex-direction: column;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
