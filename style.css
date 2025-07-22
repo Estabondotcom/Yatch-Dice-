@@ -18,7 +18,9 @@ h1 {
   letter-spacing: 1px;
   margin: 12px 0;
   text-transform: uppercase;
+  text-align: center;
 }
+
 /* ========== Main Layout Container ========== */
 .game-layout {
   display: flex;
