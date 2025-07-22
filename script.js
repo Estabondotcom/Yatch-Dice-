@@ -83,7 +83,7 @@ function renderDice({ scramble = false } = {}) {
         clearInterval(interval);
         die.textContent = dice[i]; // final value
         die.classList.remove("rolling");
-      }, 400);
+      }, 3000);
     } else {
       die.textContent = value;
     }
