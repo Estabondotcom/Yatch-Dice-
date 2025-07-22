@@ -386,3 +386,14 @@ td {
   z-index: 1001;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
+#close-help {
+  margin-top: 15px;
+  padding: 8px 12px;
+  background-color: #0e3006;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
