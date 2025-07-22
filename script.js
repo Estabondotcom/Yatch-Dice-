@@ -306,8 +306,8 @@ function showGameCompleteBanner(score) {
 
   // 🎊 Confetti!
   confetti({
-    particleCount: 100,
-    spread: 70,
+    particleCount: 150,
+    spread: 90,
     origin: { y: 0.6 }
   });
 }
