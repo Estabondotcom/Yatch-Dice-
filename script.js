@@ -114,19 +114,12 @@ function resetTurn() {
 }
 
 function rollOrConfirm() {
-  if (!gameStarted) {
-    gameStarted = true;
-    resetTurn();
-    hasRolledThisTurn = true;
-    dice = dice.map(() => Math.ceil(Math.random() * 6));
-    rollsLeft--;
-    rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
-    renderDice();
-    updateScorePreviews();
-    saveGameState();
-    return;
-  }
-
+if (!gameStarted) {
+  gameStarted = true;
+  hasRolledThisTurn = false;
+  resetTurn();
+  return;
+}
   if (confirmMode && pendingCategory) {
     const category = pendingCategory;
 
