@@ -185,6 +185,7 @@ td {
   padding: 4px 8px;
   background-color: #0e3006;
   color: white;
+  border-radius: 6px;
 }
 
 #new-game-btn:hover {
