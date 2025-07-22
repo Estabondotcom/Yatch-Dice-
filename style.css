@@ -399,17 +399,18 @@ td {
 
 #game-complete-banner {
   position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 35vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfect center */
   width: 35vw;
+  height: 35vh;
   background: rgba(34, 34, 34, 0.95);
   z-index: 3000;
   display: none;
-  flex-direction: column;
-  flex-direction: row;
+  display: flex;
+  flex-direction: column; /* Choose column or row, not both */
+  justify-content: center;
+  align-items: center;
   text-align: center;
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
