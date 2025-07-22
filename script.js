@@ -3,7 +3,7 @@ let confirmMode = false;
 let gameStarted = false;
 let hasRolledThisTurn = false;
 let yachtzCount = 0;
-let loadingSavedGame = false; // ⛔ block end modal on load
+let loadingSavedGame = false;
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -18,8 +18,8 @@ let dice = [1, 1, 1, 1, 1];
 let locked = [false, false, false, false, false];
 let rollsLeft = 3;
 let scored = {};
+let gameOver = false;
 
-// 🧠 Autosave to localStorage
 function saveGameState() {
   const state = {
     dice,
@@ -31,6 +31,7 @@ function saveGameState() {
     gameStarted,
     hasRolledThisTurn,
     yachtzCount,
+    gameOver: Object.keys(scored).length >= 13
   };
   localStorage.setItem("yachtzGame", JSON.stringify(state));
 }
@@ -51,14 +52,15 @@ function loadGameState() {
   gameStarted = state.gameStarted ?? false;
   hasRolledThisTurn = state.hasRolledThisTurn ?? false;
   yachtzCount = state.yachtzCount ?? 0;
+  gameOver = state.gameOver ?? false;
 
   renderDice();
   updateScorePreviews();
 
-  if (Object.keys(scored).length >= 13) {
+  if (gameOver) {
     gameStarted = false;
     rollBtn.textContent = "Start";
-    endModal.style.display = "none"; // ✅ prevent modal on load
+    endModal.style.display = "none"; // ✅ suppress modal on load
   } else {
     rollBtn.textContent = gameStarted
       ? confirmMode
@@ -70,7 +72,6 @@ function loadGameState() {
   loadingSavedGame = false;
 }
 
-// 🎲 Render Dice
 function renderDice() {
   diceContainer.innerHTML = "";
   dice.forEach((value, i) => {
@@ -89,7 +90,6 @@ function renderDice() {
   });
 }
 
-// 🔁 Reset Turn
 function resetTurn() {
   locked = [false, false, false, false, false];
   rollsLeft = 3;
@@ -102,7 +102,6 @@ function resetTurn() {
   saveGameState();
 }
 
-// ▶️ Start / Roll / Confirm
 function rollOrConfirm() {
   if (!gameStarted) {
     gameStarted = true;
@@ -171,7 +170,6 @@ function rollOrConfirm() {
   saveGameState();
 }
 
-// 🧠 Score Calculations
 function calculateUpperScore(n) {
   return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
 }
@@ -222,7 +220,6 @@ function calculateScoreForCategory(category) {
   }
 }
 
-// 🖱️ Handle Score Selection
 scorecard.addEventListener("click", (e) => {
   if (!gameStarted || !hasRolledThisTurn) return;
 
@@ -250,7 +247,6 @@ scorecard.addEventListener("click", (e) => {
   saveGameState();
 });
 
-// 🔍 Score Preview
 function updateScorePreviews() {
   if (!gameStarted) return;
   document.querySelectorAll(".scorable").forEach((cell) => {
@@ -267,18 +263,20 @@ function updateScorePreviews() {
   });
 }
 
-// ✅ End Game Modal
 function checkEndGame() {
-  if (loadingSavedGame) return; // ⛔ suppress during load
-  if (!gameStarted) return;
+  if (loadingSavedGame) return;
   if (Object.keys(scored).length < 13) return;
 
   const total = parseInt(document.getElementById("total-score").textContent, 10) || 0;
   finalScoreText.textContent = `You scored ${total} points!`;
   endModal.style.display = "flex";
+
+  // Set gameOver flag in storage explicitly
+  const current = JSON.parse(localStorage.getItem("yachtzGame")) || {};
+  current.gameOver = true;
+  localStorage.setItem("yachtzGame", JSON.stringify(current));
 }
 
-// 🔁 Restart Game
 function startNewGame() {
   pendingCategory = null;
   confirmMode = false;
@@ -289,6 +287,7 @@ function startNewGame() {
   dice = [1, 1, 1, 1, 1];
   locked = [false, false, false, false, false];
   rollsLeft = 3;
+  gameOver = false;
 
   document.querySelectorAll("[id^='score-']").forEach((cell) => {
     cell.textContent = "";
@@ -305,7 +304,7 @@ function startNewGame() {
   saveGameState();
 }
 
-// 🔘 Init
+// Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", () => {
   startNewGame();
@@ -331,7 +330,7 @@ document.getElementById("confirm-cancel").addEventListener("click", () => {
   document.getElementById("confirm-popup").style.display = "none";
 });
 
-// Rules Mod
+// Rules Modal
 document.getElementById("rules-btn").addEventListener("click", () => {
   document.getElementById("rules-modal").style.display = "flex";
 });
