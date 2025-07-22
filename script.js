@@ -15,10 +15,7 @@ const firebaseConfig = {
   appId: "1:696042753866:web:54a40aeabae6f156febbb3"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Initialize Firestore
 const db = firebase.firestore();
 
 const diceContainer = document.getElementById("dice-container");
@@ -445,12 +442,6 @@ document.getElementById("start-new-banner").addEventListener("click", () => {
 
 document.getElementById("post-score-banner").addEventListener("click", () => {
   alert("Score posting not implemented yet!"); // Placeholder action
-});
-
-// Leaderboard modal toggle
-document.getElementById("leaderboard-btn").addEventListener("click", () => {
-  const modal = document.getElementById("leaderboard-modal");
-  if (modal) modal.style.display = "flex";
 });
 
 document.getElementById("close-leaderboard").addEventListener("click", () => {
