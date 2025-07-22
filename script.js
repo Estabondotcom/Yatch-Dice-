@@ -2,7 +2,7 @@ let pendingCategory = null;
 let confirmMode = false;
 let gameStarted = false;
 let hasRolledThisTurn = false;
-let yachtzCount = 0; // ✅ new
+let yachtzCount = 0;
 
 // DOM Elements
 const diceContainer = document.getElementById("dice-container");
@@ -18,6 +18,46 @@ let locked = [false, false, false, false, false];
 let rollsLeft = 3;
 let scored = {};
 
+// 🧠 Autosave to localStorage
+function saveGameState() {
+  const state = {
+    dice,
+    locked,
+    scored,
+    rollsLeft,
+    pendingCategory,
+    confirmMode,
+    gameStarted,
+    hasRolledThisTurn,
+    yachtzCount,
+  };
+  localStorage.setItem("yachtzGame", JSON.stringify(state));
+}
+
+function loadGameState() {
+  const saved = localStorage.getItem("yachtzGame");
+  if (!saved) return;
+
+  const state = JSON.parse(saved);
+  dice = state.dice || [1, 1, 1, 1, 1];
+  locked = state.locked || [false, false, false, false, false];
+  scored = state.scored || {};
+  rollsLeft = state.rollsLeft ?? 3;
+  pendingCategory = state.pendingCategory ?? null;
+  confirmMode = state.confirmMode ?? false;
+  gameStarted = state.gameStarted ?? false;
+  hasRolledThisTurn = state.hasRolledThisTurn ?? false;
+  yachtzCount = state.yachtzCount ?? 0;
+
+  renderDice();
+  updateScorePreviews();
+  rollBtn.textContent = gameStarted
+    ? confirmMode
+      ? "Confirm"
+      : `Roll Dice (${rollsLeft} rolls left)`
+    : "Start";
+}
+
 // 🎲 Render Dice
 function renderDice() {
   diceContainer.innerHTML = "";
@@ -30,6 +70,7 @@ function renderDice() {
         locked[i] = !locked[i];
         renderDice();
         updateScorePreviews();
+        saveGameState();
       }
     });
     diceContainer.appendChild(die);
@@ -46,6 +87,7 @@ function resetTurn() {
   rollBtn.textContent = "Roll Dice (3 rolls left)";
   renderDice();
   updateScorePreviews();
+  saveGameState();
 }
 
 // ▶️ Start / Roll / Confirm
@@ -59,18 +101,17 @@ function rollOrConfirm() {
     rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
     renderDice();
     updateScorePreviews();
+    saveGameState();
     return;
   }
 
   if (confirmMode && pendingCategory) {
     const category = pendingCategory;
 
-    // ✅ Yachtz stacking logic
     if (category === "yahtzee" && isYahtzee()) {
       const currentScore = scored["yahtzee"] || 0;
 
       if (currentScore === 0) {
-        // Already scored 0 — ignore bonus
         const scoreCell = document.getElementById("score-yahtzee");
         scoreCell.className = "filled-zero";
       } else {
@@ -83,7 +124,6 @@ function rollOrConfirm() {
         scoreCell.className = "filled";
       }
     } else {
-      // Standard scoring
       const score = parseInt(document.getElementById("score-" + category).textContent, 10);
       scored[category] = score;
 
@@ -91,7 +131,6 @@ function rollOrConfirm() {
       scoreCell.className = score === 0 ? "filled-zero" : "filled";
     }
 
-    // Upper section totals + bonus
     const upperCategories = ["ones", "twos", "threes", "fours", "fives", "sixes"];
     const upperTotal = upperCategories.reduce((sum, key) => sum + (scored[key] || 0), 0);
     document.getElementById("upper-subtotal").textContent = upperTotal;
@@ -105,6 +144,7 @@ function rollOrConfirm() {
     confirmMode = false;
     resetTurn();
     checkEndGame();
+    saveGameState();
     return;
   }
 
@@ -116,6 +156,7 @@ function rollOrConfirm() {
   rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
   renderDice();
   updateScorePreviews();
+  saveGameState();
 }
 
 // 🧠 Score Calculations
@@ -194,6 +235,7 @@ scorecard.addEventListener("click", (e) => {
 
   rollBtn.textContent = "Confirm";
   confirmMode = true;
+  saveGameState();
 });
 
 // 🔍 Score Preview
@@ -245,42 +287,33 @@ function startNewGame() {
   rollBtn.textContent = "Start";
   endModal.style.display = "none";
 
+  localStorage.removeItem("yachtzGame");
   renderDice();
+  saveGameState();
 }
 
 // 🔘 Init
 rollBtn.addEventListener("click", rollOrConfirm);
 restartBtn.addEventListener("click", startNewGame);
 startNewGame();
+loadGameState();
 
-// 🧠 New Game Confirm Modal
-const newGameBtn = document.getElementById("new-game-btn");
-const confirmPopup = document.getElementById("confirm-popup");
-const confirmYes = document.getElementById("confirm-yes");
-const confirmCancel = document.getElementById("confirm-cancel");
-
-newGameBtn.addEventListener("click", () => {
-  confirmPopup.style.display = "flex";
+// Confirm Modal
+document.getElementById("new-game-btn").addEventListener("click", () => {
+  document.getElementById("confirm-popup").style.display = "flex";
 });
-
-confirmYes.addEventListener("click", () => {
+document.getElementById("confirm-yes").addEventListener("click", () => {
   startNewGame();
-  confirmPopup.style.display = "none";
+  document.getElementById("confirm-popup").style.display = "none";
+});
+document.getElementById("confirm-cancel").addEventListener("click", () => {
+  document.getElementById("confirm-popup").style.display = "none";
 });
 
-confirmCancel.addEventListener("click", () => {
-  confirmPopup.style.display = "none";
+// Rules Modal
+document.getElementById("rules-btn").addEventListener("click", () => {
+  document.getElementById("rules-modal").style.display = "flex";
 });
-
-// 📖 Rules Modal
-const rulesBtn = document.getElementById("rules-btn");
-const rulesModal = document.getElementById("rules-modal");
-const closeRules = document.getElementById("close-rules");
-
-rulesBtn.addEventListener("click", () => {
-  rulesModal.style.display = "flex";
-});
-
-closeRules.addEventListener("click", () => {
-  rulesModal.style.display = "none";
+document.getElementById("close-rules").addEventListener("click", () => {
+  document.getElementById("rules-modal").style.display = "none";
 });
