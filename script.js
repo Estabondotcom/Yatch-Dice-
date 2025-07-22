@@ -305,11 +305,9 @@ function showGameCompleteBanner(score) {
   const banner = document.createElement("div");
   banner.id = "game-complete-banner";
   banner.innerHTML = `
-    <div id="game-complete-banner">
   <h2>🎉 Game Complete!</h2>
   <p>You scored <strong>123</strong> points.</p>
   <button>Start New Game</button>
-</div>
   `;
 
   document.body.appendChild(banner);
