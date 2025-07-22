@@ -39,7 +39,7 @@ html, body {
 .left-buttons,
 .right-buttons {
   display: flex;
-  gap: 6px;
+  gap: 3px;
   flex: 0 0 auto;
 }
 
@@ -84,6 +84,10 @@ html, body {
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
   cursor: pointer;
+  padding: 4px 6px;       /* ⬅️ shrink padding */
+  font-size: 0.75rem;     /* ⬅️ smaller text */
+  min-width: unset;       /* ⬅️ remove forced width */
+  line-height: 1.2;
 }
 
 /* Trophy button style */
