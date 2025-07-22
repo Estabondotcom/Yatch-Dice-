@@ -399,8 +399,8 @@ td {
 
 #game-complete-banner {
   position: fixed;
-  width: 36vw;
-  height: 36vh;
+  width: 45vw;
+  height: 45vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
