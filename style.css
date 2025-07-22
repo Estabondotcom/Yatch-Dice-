@@ -236,7 +236,8 @@ td {
 }
 
 #confirm-cancel {
-  background-color: #ccc;
+  background-color: #631111;
+  color: white;
 }
 #rules-btn {
   position: absolute;
@@ -287,6 +288,7 @@ td {
   margin-top: 15px;
   padding: 8px 12px;
   background-color: #0e3006;
+  color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
