@@ -439,3 +439,36 @@ td {
   color: #000;
   cursor: pointer;
 }
+
+#yachtz-zoom {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  font-family: 'Bangers', cursive;
+  font-size: 8rem;
+  color: #F3DA10;
+  text-shadow: 2px 2px #D1A113;
+  opacity: 0;
+  z-index: 3000;
+  pointer-events: none;
+}
+
+@keyframes zoomFade {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+.yachtz-active {
+  animation: zoomFade 1.6s ease-out forwards;
+}
