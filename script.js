@@ -386,3 +386,13 @@ document.getElementById("close-help").addEventListener("click", () => {
   const modal = document.getElementById("help-modal");
   if (modal) modal.style.display = "none";
 });
+
+document.getElementById("start-new-banner").addEventListener("click", () => {
+  startNewGame();
+  document.getElementById("game-complete-banner").style.display = "none";
+  document.getElementById("game-complete-banner").classList.remove("show");
+});
+
+document.getElementById("post-score-banner").addEventListener("click", () => {
+  alert("Score posting not implemented yet!"); // Placeholder action
+});
