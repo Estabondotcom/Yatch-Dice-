@@ -256,21 +256,22 @@ scorecard.addEventListener("click", (e) => {
   if (!labelCell) return;
 
   const category = labelCell.dataset.category;
-  if (scored[category]) return;
 
-if (pendingCategory === category) {
-  // 🔄 Cancel confirmation, but restore preview
-  const scoreCell = document.getElementById("score-" + category);
-  const previewScore = calculateScoreForCategory(category);
-  scoreCell.textContent = previewScore;
-  scoreCell.className = "preview"; // Keep it as a preview
+  // ✅ Properly check if score is already locked in (even if it's 0)
+  if (scored[category] !== undefined) return;
 
-  pendingCategory = null;
-  confirmMode = false;
-  rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
-  saveGameState();
-  return;
-}
+  if (pendingCategory === category) {
+    const scoreCell = document.getElementById("score-" + category);
+    const previewScore = calculateScoreForCategory(category);
+    scoreCell.textContent = previewScore || '';
+    scoreCell.className = "preview";
+    pendingCategory = null;
+    confirmMode = false;
+    rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+    saveGameState();
+    return;
+  }
+
   pendingCategory = category;
   const score = calculateScoreForCategory(category);
   const scoreCell = document.getElementById("score-" + category);
