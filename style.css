@@ -62,7 +62,7 @@ html, body {
   padding: 10px 15px;
   font-size: 1rem;
   border-radius: 8px;
-  border: 2px solid #F3DA10;
+  border: 1px solid #F3DA10;
   background-color: #0e3006;
   color: white;
   cursor: pointer;
@@ -181,7 +181,7 @@ td {
   padding: 6px 10px;
   background-color: #0e3006;
   color: white;
-  border: 2px solid #F3DA10;
+  border: 1px solid #F3DA10;
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -246,7 +246,7 @@ td {
   padding: 6px 10px;
   background-color: #0e3006;
   color: white;
-  border: 2px solid #F3DA10;
+  border: 1px solid #F3DA10;
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -316,7 +316,7 @@ td {
   text-align: center;
   letter-spacing: 1px;
   text-transform: uppercase;
-  text-shadow: 1px 2px 0 #0e3006;
+  text-shadow: 2px 2px #0e3006;
 }
 
   #help-modal {
@@ -350,7 +350,7 @@ td {
   padding: 3px 7px;
   font-size: 1rem;
   background-color: #0e3006;
-  border: 2px solid #F3DA10;
+  border: 1px solid #F3DA10;
   border-radius: 50%;
   cursor: pointer;
   font-weight: bold;
