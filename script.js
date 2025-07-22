@@ -69,21 +69,30 @@ function renderDice({ scramble = false } = {}) {
     die.className = "die" + (locked[i] ? " locked" : "");
 
     if (scramble && !locked[i]) {
-      // Start with a temporary placeholder (real value will come later)
-      die.textContent = Math.ceil(Math.random() * 6);
-      die.classList.add("rolling");
+  die.textContent = Math.ceil(Math.random() * 6);
+  die.classList.add("rolling");
 
-      // Keep updating with random numbers during the scramble
-      let interval = setInterval(() => {
-        die.textContent = Math.ceil(Math.random() * 6);
-      }, 50);
+  // 🔁 Random spin directions for this die
+  const angle1 = (Math.random() > 0.5 ? 1 : -1) * 10 + "deg";
+  const angle2 = (Math.random() > 0.5 ? 1 : -1) * 20 + "deg";
+  const angle3 = (Math.random() > 0.5 ? 1 : -1) * 5 + "deg";
 
-      // Stop the scramble after 400ms and show real value
-      setTimeout(() => {
-        clearInterval(interval);
-        die.textContent = dice[i]; // final value
-        die.classList.remove("rolling");
-      }, 3000);
+  die.style.setProperty("--start-rot", "0deg");
+  die.style.setProperty("--mid1-rot", angle1);
+  die.style.setProperty("--mid2-rot", angle2);
+  die.style.setProperty("--mid3-rot", angle3);
+  die.style.setProperty("--end-rot", "0deg");
+
+  let interval = setInterval(() => {
+    die.textContent = Math.ceil(Math.random() * 6);
+  }, 50);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    die.textContent = dice[i];
+    die.classList.remove("rolling");
+  }, 2000);
+}
     } else {
       die.textContent = value;
     }
