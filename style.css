@@ -406,5 +406,5 @@ td {
 }
 
 .die.rolling {
-  animation: roll-combined 0.5s ease;
+  animation: roll-combined 3s ease;
 }
