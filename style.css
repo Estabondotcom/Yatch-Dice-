@@ -265,6 +265,7 @@ td {
   z-index: 2000;
   padding: 5px; /* allows inner box breathing room on small screens */
   box-sizing: border-box;
+  margin-right: 5px;
 }
 
 .rules-box {
