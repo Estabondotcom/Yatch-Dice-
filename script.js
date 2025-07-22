@@ -131,23 +131,27 @@ if (!gameStarted) {
     const category = pendingCategory;
 
     if (category === "yahtzee" && isYahtzee()) {
-      const currentScore = scored["yahtzee"] || 0;
+  const currentScore = scored["yahtzee"];
 
-      if (currentScore === 0) {
-        const scoreCell = document.getElementById("score-yahtzee");
-        scoreCell.className = "filled-zero";
-      } else {
-        yachtzCount++;
-        const newScore = 50 + (yachtzCount - 1) * 100;
-        scored["yahtzee"] = newScore;
+  if (calculateScoreForCategory("yahtzee") === 50 && currentScore === undefined) {
+    triggerYachtzCelebration(); // 🎉 First confirmed Yachtz
+  }
 
-        const scoreCell = document.getElementById("score-yahtzee");
-        scoreCell.textContent = newScore;
-        scoreCell.className = "filled";
+  if (currentScore === 0) {
+    const scoreCell = document.getElementById("score-yahtzee");
+    scoreCell.className = "filled-zero";
+  } else {
+    yachtzCount++;
+    const newScore = 50 + (yachtzCount - 1) * 100;
+    scored["yahtzee"] = newScore;
 
-        triggerYachtzCelebration();
-      }
-    } 
+    const scoreCell = document.getElementById("score-yahtzee");
+    scoreCell.textContent = newScore;
+    scoreCell.className = "filled";
+
+    triggerYachtzCelebration(); // 🎉 Bonus confirmed Yachtz
+  }
+}
     
     else {
       const score = parseInt(document.getElementById("score-" + category).textContent, 10);
