@@ -472,3 +472,15 @@ td {
 .yachtz-active {
   animation: zoomFade 1.6s ease-out forwards;
 }
+.die.rainbow {
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400% 100%;
+  animation: rainbow-slide 2s linear infinite;
+  color: white;
+  border-color: gold;
+}
+
+@keyframes rainbow-slide {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
