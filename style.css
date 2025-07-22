@@ -400,7 +400,7 @@ td {
 #game-complete-banner {
   position: fixed;
   width: 36vw;
-  height:36vw;
+  height:36vh;
   margin-top: 32vh;
   margin-bottom: 32vh;
   margin-left: 32vw;
