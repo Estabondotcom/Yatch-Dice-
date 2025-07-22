@@ -51,17 +51,19 @@ function loadGameState() {
 
   renderDice();
   updateScorePreviews();
-  rollBtn.textContent = gameStarted
-    ? confirmMode
-      ? "Confirm"
-      : `Roll Dice (${rollsLeft} rolls left)`
-    : "Start";
-  // If game is already over, don't auto-trigger the modal
-if (Object.keys(scored).length >= 13) {
-  gameStarted = false;
-  rollBtn.textContent = "Start";
-}
 
+  // ✅ If game is already over, don't trigger modal or resume as active
+  if (Object.keys(scored).length >= 13) {
+    gameStarted = false;
+    rollBtn.textContent = "Start";
+  } else {
+    rollBtn.textContent = gameStarted
+      ? confirmMode
+        ? "Confirm"
+        : `Roll Dice (${rollsLeft} rolls left)`
+      : "Start";
+  }
+}
 // 🎲 Render Dice
 function renderDice() {
   diceContainer.innerHTML = "";
