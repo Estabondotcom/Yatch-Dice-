@@ -371,17 +371,16 @@ td {
 }
 
 @keyframes roll-combined {
-  0%   { transform: scale(1) rotate(0deg); }
-  25%  { transform: scale(1.2) rotate(10deg); }
-  50%  { transform: scale(1.1) rotate(-10deg); }
-  75%  { transform: scale(1.15) rotate(5deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0%   { transform: scale(1) rotate(var(--start-rot, 0deg)); }
+  25%  { transform: scale(1.2) rotate(var(--mid1-rot, 10deg)); }
+  50%  { transform: scale(1.1) rotate(var(--mid2-rot, -10deg)); }
+  75%  { transform: scale(1.15) rotate(var(--mid3-rot, 5deg)); }
+  100% { transform: scale(1) rotate(var(--end-rot, 0deg)); }
 }
 
 .die.rolling {
-  animation: roll-combined 3s ease;
+  animation: roll-combined 2s ease forwards;
 }
-
 @keyframes fadeZoomIn {
   0% {
     opacity: 0;
