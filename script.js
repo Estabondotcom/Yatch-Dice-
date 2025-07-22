@@ -61,12 +61,33 @@ function loadGameState() {
   loadingSavedGame = false;
 }
 
-function renderDice() {
+function renderDice({ scramble = false } = {}) {
   diceContainer.innerHTML = "";
+
   dice.forEach((value, i) => {
     const die = document.createElement("div");
     die.className = "die" + (locked[i] ? " locked" : "");
-    die.textContent = value;
+
+    if (scramble && !locked[i]) {
+      // Start with a temporary placeholder (real value will come later)
+      die.textContent = Math.ceil(Math.random() * 6);
+      die.classList.add("rolling");
+
+      // Keep updating with random numbers during the scramble
+      let interval = setInterval(() => {
+        die.textContent = Math.ceil(Math.random() * 6);
+      }, 50);
+
+      // Stop the scramble after 400ms and show real value
+      setTimeout(() => {
+        clearInterval(interval);
+        die.textContent = dice[i]; // final value
+        die.classList.remove("rolling");
+      }, 400);
+    } else {
+      die.textContent = value;
+    }
+
     die.addEventListener("click", () => {
       if (!confirmMode && gameStarted && hasRolledThisTurn) {
         locked[i] = !locked[i];
@@ -75,6 +96,7 @@ function renderDice() {
         saveGameState();
       }
     });
+
     diceContainer.appendChild(die);
   });
 }
@@ -150,14 +172,21 @@ function rollOrConfirm() {
 
   if (rollsLeft <= 0) return;
 
-  hasRolledThisTurn = true;
-  dice = dice.map((val, i) => (locked[i] ? val : Math.ceil(Math.random() * 6)));
-  rollsLeft--;
-  rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
-  renderDice();
+hasRolledThisTurn = true;
+
+// Roll new dice values first
+dice = dice.map((val, i) => (locked[i] ? val : Math.ceil(Math.random() * 6)));
+rollsLeft--;
+rollBtn.textContent = `Roll Dice (${rollsLeft} rolls left)`;
+
+// Show scramble animation
+renderDice({ scramble: true });
+
+// Delay score preview update until scramble ends
+setTimeout(() => {
   updateScorePreviews();
   saveGameState();
-}
+}, 2000);
 
 function calculateUpperScore(n) {
   return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
