@@ -280,7 +280,14 @@ scorecard.addEventListener("click", (e) => {
   const category = labelCell.dataset.category;
 
   // ✅ Properly check if score is already locked in (even if it's 0)
-  if (scored[category] !== undefined) return;
+ // Special logic: allow clicking yahtzee cell again if already scored ≥50 and dice are a Yachtz
+if (scored[category] !== undefined) {
+  if (category === "yahtzee" && scored["yahtzee"] >= 50 && isYahtzee()) {
+    // allow bonus yachtz
+  } else {
+    return; // disallow all other re-clicks
+  }
+}
 
   if (pendingCategory === category) {
     const scoreCell = document.getElementById("score-" + category);
