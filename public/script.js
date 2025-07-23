@@ -107,7 +107,6 @@ function renderDice({ scramble = false } = {}) {
       die.textContent = value;
     }
 
-    die.addEventListener("click", () => {
       if (!confirmMode && gameStarted && hasRolledThisTurn) {
         locked[i] = !locked[i];
         renderDice();
@@ -285,7 +284,6 @@ function calculateScoreForCategory(category) {
   }
 }
 
-scorecard.addEventListener("click", (e) => {
   if (!gameStarted || !hasRolledThisTurn) return;
 
   const row = e.target.closest("tr");
@@ -496,7 +494,6 @@ function startNewGame() {
 }
 
 
-rollBtn.addEventListener("click", rollOrConfirm);
 
 const saved = localStorage.getItem("yachtzGame");
 if (saved) {
@@ -505,47 +502,38 @@ if (saved) {
   startNewGame();
 }
 // Hook up top bar buttons
-document.getElementById("new-game-btn").addEventListener("click", () => {
   const popup = document.getElementById("confirm-popup");
   if (popup) popup.style.display = "block";
 });
 
-document.getElementById("rules-btn").addEventListener("click", () => {
   const modal = document.getElementById("rules-modal");
   if (modal) modal.style.display = "block";
 });
 
-document.getElementById("close-rules").addEventListener("click", () => {
   const modal = document.getElementById("rules-modal");
   if (modal) modal.style.display = "none";
 });
 
-document.getElementById("confirm-yes").addEventListener("click", () => {
   startNewGame();
   document.getElementById("confirm-popup").style.display = "none";
 });
 
-document.getElementById("confirm-cancel").addEventListener("click", () => {
   document.getElementById("confirm-popup").style.display = "none";
 });
 
-document.getElementById("help-btn").addEventListener("click", () => {
   const modal = document.getElementById("help-modal");
   if (modal) modal.style.display = "block";
 });
 
-document.getElementById("close-help").addEventListener("click", () => {
   const modal = document.getElementById("help-modal");
   if (modal) modal.style.display = "none";
 });
 
-document.getElementById("start-new-banner").addEventListener("click", () => {
   startNewGame();
   document.getElementById("game-complete-banner").style.display = "none";
   document.getElementById("game-complete-banner").classList.remove("show");
 });
 
-document.getElementById("close-leaderboard").addEventListener("click", () => {
   const modal = document.getElementById("leaderboard-modal");
   if (modal) modal.style.display = "none";
 });
@@ -671,25 +659,37 @@ function loadLeaderboard() {
       console.error("Error getting leaderboard:", error);
     });
 }
-document.getElementById("leaderboard-btn").addEventListener("click", () => {
   loadLeaderboard();
   document.getElementById("leaderboard-modal").style.display = "block";
 });
 
-document.getElementById("close-leaderboard").addEventListener("click", () => {
   document.getElementById("leaderboard-modal").style.display = "none";
 });
 
-document.getElementById("post-score-banner").addEventListener("click", () => {
   const score = parseInt(document.getElementById("total-score").textContent);
 
   promptAndPostScore(score);
+
+  const btn = document.getElementById("post-score-banner");
+  btn.disabled = true;
+  btn.style.opacity = "0.5";
+  btn.style.cursor = "not-allowed";
+  btn.textContent = "Score Posted";
 });
 
-document.getElementById("cancel-score").addEventListener("click", () => {
   document.getElementById("score-modal").style.display = "none";
   document.getElementById("score-error").textContent = "";
 });
+function forceBonusYachtz() {
+  // Pretend the user already scored a 50-point Yachtz
+  scored["yahtzee"] = 50;
+  yachtzCount = 1;
+  gameStarted = true;
+  hasRolledThisTurn = true;
+
+  // Set all dice to the same number (e.g., all 6s)
+  dice = [6, 6, 6, 6, 6];
+  locked = [false, false, false, false, false];
 
   // Re-render game state
   renderDice();
@@ -701,75 +701,22 @@ document.getElementById("cancel-score").addEventListener("click", () => {
   yahtzeeCell.click(); // second click to confirm
 }
 
+
 window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("roll-btn").addEventListener("click", rollOrConfirm);
-
-  document.getElementById("new-game-btn").addEventListener("click", () => {
-    const popup = document.getElementById("confirm-popup");
-    if (popup) popup.style.display = "block";
-  });
-
-  document.getElementById("rules-btn").addEventListener("click", () => {
-    const modal = document.getElementById("rules-modal");
-    if (modal) modal.style.display = "block";
-  });
-
-  document.getElementById("close-rules").addEventListener("click", () => {
-    const modal = document.getElementById("rules-modal");
-    if (modal) modal.style.display = "none";
-  });
-
-  document.getElementById("confirm-yes").addEventListener("click", () => {
-    startNewGame();
-    document.getElementById("confirm-popup").style.display = "none";
-  });
-
-  document.getElementById("confirm-cancel").addEventListener("click", () => {
-    document.getElementById("confirm-popup").style.display = "none";
-  });
-
-  document.getElementById("help-btn").addEventListener("click", () => {
-    const modal = document.getElementById("help-modal");
-    if (modal) modal.style.display = "block";
-  });
-
-  document.getElementById("close-help").addEventListener("click", () => {
-    const modal = document.getElementById("help-modal");
-    if (modal) modal.style.display = "none";
-  });
-
-  document.getElementById("start-new-banner").addEventListener("click", () => {
-    startNewGame();
-    document.getElementById("game-complete-banner").style.display = "none";
-    document.getElementById("game-complete-banner").classList.remove("show");
-  });
-
-  document.getElementById("close-leaderboard").addEventListener("click", () => {
-    const modal = document.getElementById("leaderboard-modal");
-    if (modal) modal.style.display = "none";
-  });
-
-  document.getElementById("leaderboard-btn").addEventListener("click", () => {
-    loadLeaderboard();
-    document.getElementById("leaderboard-modal").style.display = "block";
-  });
-
-  document.getElementById("post-score-banner").addEventListener("click", () => {
-    const score = parseInt(document.getElementById("total-score").textContent);
-    promptAndPostScore(score);
-  });
-
-  document.getElementById("cancel-score").addEventListener("click", () => {
-    document.getElementById("score-modal").style.display = "none";
-    document.getElementById("score-error").textContent = "";
-  });
-
-  generateSeparatorSquares(); // Keep this inside DOMContentLoaded too
-
-  const saved = localStorage.getItem("yachtzGame");
-  if (saved) {
-    loadGameState();
-  } else {
-    startNewGame();
-  }
+    die.addEventListener("click", () => {
+scorecard.addEventListener("click", (e) => {
+rollBtn.addEventListener("click", rollOrConfirm);
+document.getElementById("new-game-btn").addEventListener("click", () => {
+document.getElementById("rules-btn").addEventListener("click", () => {
+document.getElementById("close-rules").addEventListener("click", () => {
+document.getElementById("confirm-yes").addEventListener("click", () => {
+document.getElementById("confirm-cancel").addEventListener("click", () => {
+document.getElementById("help-btn").addEventListener("click", () => {
+document.getElementById("close-help").addEventListener("click", () => {
+document.getElementById("start-new-banner").addEventListener("click", () => {
+document.getElementById("close-leaderboard").addEventListener("click", () => {
+document.getElementById("leaderboard-btn").addEventListener("click", () => {
+document.getElementById("close-leaderboard").addEventListener("click", () => {
+document.getElementById("post-score-banner").addEventListener("click", () => {
+document.getElementById("cancel-score").addEventListener("click", () => {
 });
