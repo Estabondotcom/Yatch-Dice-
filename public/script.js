@@ -23,6 +23,10 @@ let locked = [false, false, false, false, false];
 let rollsLeft = 3;
 let scored = {};
 
+const diceContainer = document.getElementById("dice-container");
+const rollBtn = document.getElementById("roll-btn");
+const scorecard = document.getElementById("scorecard");
+
 function saveGameState() {
   const state = {
     dice,
@@ -679,7 +683,3 @@ function forceBonusYachtz() {
   yahtzeeCell.click(); // first click to preview
   yahtzeeCell.click(); // second click to confirm
 }
-
-const diceContainer = document.getElementById("dice-container");
-const rollBtn = document.getElementById("roll-btn");
-const scorecard = document.getElementById("scorecard");
