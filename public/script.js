@@ -629,7 +629,7 @@ function promptAndPostScore(finalScore) {
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
       loadLeaderboard();
-      modal.style.display = "none";
+      modal.style.display = "flex";
 
       const btn = document.getElementById("post-score-banner");
       btn.disabled = true;
