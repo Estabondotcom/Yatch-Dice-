@@ -387,9 +387,18 @@ function startNewGame() {
   const banner = document.getElementById("game-complete-banner");
   if (banner) {
     banner.classList.remove("show");
-    banner.style.display = "none"; // just in case
+    banner.style.display = "none";
+  }
+
+  const postBtn = document.getElementById("post-score-banner");
+  if (postBtn) {
+    postBtn.disabled = false;
+    postBtn.style.opacity = "1";
+    postBtn.style.cursor = "pointer";
+    postBtn.textContent = "Post Score";
   }
 }
+
 
 rollBtn.addEventListener("click", rollOrConfirm);
 
