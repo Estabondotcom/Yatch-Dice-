@@ -279,16 +279,18 @@ scorecard.addEventListener("click", (e) => {
 
   const category = labelCell.dataset.category;
 
-  // ✅ Properly check if score is already locked in (even if it's 0)
- // Special logic: allow clicking yahtzee cell again if already scored ≥50 and dice are a Yachtz
-if (scored[category] !== undefined) {
-  if (category === "yahtzee" && scored["yahtzee"] >= 50 && isYahtzee()) {
-    // allow bonus yachtz
-  } else {
-    return; // disallow all other re-clicks
-  }
-}
+  // Prevent selecting already scored cells — except bonus yahtzee
+  if (scored[category] !== undefined) {
+    const isBonusYachtz = (
+      category === "yahtzee" &&
+      scored["yahtzee"] >= 50 &&
+      isYahtzee()
+    );
 
+    if (!isBonusYachtz) return;
+  }
+
+  // Cancel current selection if clicking same cell again
   if (pendingCategory === category) {
     const scoreCell = document.getElementById("score-" + category);
     const previewScore = calculateScoreForCategory(category);
@@ -301,29 +303,31 @@ if (scored[category] !== undefined) {
     return;
   }
 
-if (pendingCategory) {
-  const prevCell = document.getElementById("score-" + pendingCategory);
-  if (prevCell) {
-const preview = calculateScoreForCategory(pendingCategory);
-prevCell.textContent = (preview === 0) ? "0" : preview;
-prevCell.className = "preview";
+  // Clear previous selected cell, if any
+  if (pendingCategory) {
+    const prevCell = document.getElementById("score-" + pendingCategory);
+    if (prevCell) {
+      const prevScore = calculateScoreForCategory(pendingCategory);
+      prevCell.textContent = (prevScore === 0) ? "0" : prevScore;
+      prevCell.className = "preview";
+    }
   }
-}
- 
-// Set new pending selection
-let score = calculateScoreForCategory(category);
 
-// Adjust preview if bonus yahtzee
-if (category === "yahtzee" && scored["yahtzee"] >= 50 && isYahtzee()) {
-  score = scored["yahtzee"] + 100;
-}
+  // Set new selection
+  let score = calculateScoreForCategory(category);
 
-const scoreCell = document.getElementById("score-" + category);
-scoreCell.textContent = score;
-scoreCell.className = "preview selected";
+  // Bonus yahtzee override
+  if (category === "yahtzee" && scored["yahtzee"] >= 50 && isYahtzee()) {
+    score = scored["yahtzee"] + 100;
+  }
 
-  rollBtn.textContent = "Confirm";
+  const scoreCell = document.getElementById("score-" + category);
+  scoreCell.textContent = score;
+  scoreCell.className = "preview selected";
+
+  pendingCategory = category;
   confirmMode = true;
+  rollBtn.textContent = "Confirm";
   saveGameState();
 });
 
