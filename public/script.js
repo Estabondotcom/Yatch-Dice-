@@ -292,7 +292,7 @@ if (scored[category] !== undefined) {
   if (pendingCategory === category) {
     const scoreCell = document.getElementById("score-" + category);
     const previewScore = calculateScoreForCategory(category);
-    scoreCell.textContent = previewScore || '';
+    scoreCell.textContent = (previewScore === 0) ? "0" : previewScore;
     scoreCell.className = "preview";
     pendingCategory = null;
     confirmMode = false;
