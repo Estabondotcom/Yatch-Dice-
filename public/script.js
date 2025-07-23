@@ -372,20 +372,19 @@ function checkEndGame() {
     "largeStraight", "yahtzee", "chance"
   ];
 
-  const filledCats = allCats.filter(cat => scored[cat] !== undefined);
-  const filledCount = filledCats.length;
   const yahtzeeScore = scored["yahtzee"];
-
-  const allButYachtzFilled = filledCount === 12 && yahtzeeScore === undefined;
-  const allFilled = filledCount === 13;
+  const otherCats = allCats.filter(cat => cat !== "yahtzee");
+  const otherCatsFilled = otherCats.every(cat => scored[cat] !== undefined);
+  const onlyYahtzeeUnfilled = otherCatsFilled && yahtzeeScore === undefined;
+  const allFilled = allCats.every(cat => scored[cat] !== undefined);
   const yachtzWasZero = yahtzeeScore === 0;
 
-  // ✅ ⛔️ Do not end the game yet if Yahtzee is the only one left and unscored
-  if (allButYachtzFilled) {
-    return; // Player still has a chance to roll a Yahtzee
+  // ✅ Case 0: All other categories filled, but Yahtzee is still unscored → wait for final roll
+  if (onlyYahtzeeUnfilled) {
+    return;
   }
 
-  // 🎯 Case 1: All 13 filled and yahtzee was 0
+  // 🎯 Case 1: All 13 filled and Yahtzee was scored as 0
   if (allFilled && yachtzWasZero) {
     gameOver = true;
     const total = calculateFinalScore();
@@ -393,14 +392,16 @@ function checkEndGame() {
     return;
   }
 
-  // 🎯 Case 2: All 13 filled and yahtzee >= 50
+  // 🎯 Case 2: All 13 filled and Yahtzee was scored with 50+ → game is complete
   if (allFilled && yahtzeeScore >= 50) {
-  // Do nothing here. Let the game wait for the next roll
-  return;
-}
+    gameOver = true;
+    const total = calculateFinalScore();
+    showGameCompleteBanner(total);
+    return;
+  }
 
-  // 🎯 Case 3: Only yahtzee left, and player rolled a yahtzee (score it as 50)
-  if (filledCount === 12 && isYahtzee()) {
+  // 🎯 Case 3: Only Yahtzee left unscored, and player just rolled a Yahtzee → auto-score it
+  if (onlyYahtzeeUnfilled && isYahtzee()) {
     scored["yahtzee"] = 50;
     yachtzCount = 1;
 
@@ -415,8 +416,8 @@ function checkEndGame() {
     return;
   }
 
-  // 🎯 Case 4: Only yahtzee left, but player did NOT roll one → game ends
-  if (filledCount === 12 && !isYahtzee()) {
+  // 🎯 Case 4: Only Yahtzee left, and player failed to roll one → auto-score it as 0
+  if (onlyYahtzeeUnfilled && !isYahtzee()) {
     scored["yahtzee"] = 0;
 
     const scoreCell = document.getElementById("score-yahtzee");
