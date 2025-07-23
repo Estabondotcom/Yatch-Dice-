@@ -311,8 +311,13 @@ prevCell.className = "preview";
 }
  
 // Set new pending selection
-pendingCategory = category;
-const score = calculateScoreForCategory(category);
+let score = calculateScoreForCategory(category);
+
+// Adjust preview if bonus yahtzee
+if (category === "yahtzee" && scored["yahtzee"] >= 50 && isYahtzee()) {
+  score = scored["yahtzee"] + 100;
+}
+
 const scoreCell = document.getElementById("score-" + category);
 scoreCell.textContent = score;
 scoreCell.className = "preview selected";
