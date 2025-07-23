@@ -364,6 +364,11 @@ function checkEndGame() {
   const allFilled = filledCount === 13;
   const yachtzWasZero = yahtzeeScore === 0;
 
+  // ✅ ⛔️ Do not end the game yet if Yahtzee is the only one left and unscored
+  if (allButYachtzFilled) {
+    return; // Player still has a chance to roll a Yahtzee
+  }
+
   // 🎯 Case 1: All 13 filled and yahtzee was 0
   if (allFilled && yachtzWasZero) {
     gameOver = true;
@@ -396,7 +401,7 @@ function checkEndGame() {
   }
 
   // 🎯 Case 3: Only yahtzee left, and player rolled a yahtzee (score it as 50)
-  if (allButYachtzFilled && isYahtzee()) {
+  if (filledCount === 12 && isYahtzee()) {
     scored["yahtzee"] = 50;
     yachtzCount = 1;
 
@@ -412,7 +417,7 @@ function checkEndGame() {
   }
 
   // 🎯 Case 4: Only yahtzee left, but player did NOT roll one → game ends
-  if (allButYachtzFilled && !isYahtzee()) {
+  if (filledCount === 12 && !isYahtzee()) {
     scored["yahtzee"] = 0;
 
     const scoreCell = document.getElementById("score-yahtzee");
