@@ -301,12 +301,15 @@ if (scored[category] !== undefined) {
     return;
   }
 
-// Clear any existing preview selections
-document.querySelectorAll("#scorecard td.preview").forEach(cell => {
-  cell.textContent = "";
-  cell.className = "";
-});
-
+// Only clear the previously selected preview cell
+if (pendingCategory) {
+  const prevCell = document.getElementById("score-" + pendingCategory);
+  if (prevCell) {
+    prevCell.textContent = "";
+    prevCell.className = "";
+  }
+}
+  
 // Set new pending selection
 pendingCategory = category;
 const score = calculateScoreForCategory(category);
