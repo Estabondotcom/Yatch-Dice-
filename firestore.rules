@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Leaderboard write/read rules
+    match /leaderboard/{entryId} {
+      
+      // Allow anyone to read
+      allow read: if true;
+
+      // Allow writes only if:
+      // - name is 1-5 chars
+      // - score is a number from 0 to 9999
+      // - no rapid multiple writes
+      allow create: if
+        request.resource.data.name is string &&
+        request.resource.data.name.size() <= 5 &&
+        request.resource.data.score is int &&
+        request.resource.data.score >= 0 &&
+        request.resource.data.score <= 9999 &&
+        request.time > resource.__lastUpdateTime + duration.value("10s");
+
+      // Optional: disallow updates/deletes
+      allow update, delete: if false;
+    }
+  }
+}
