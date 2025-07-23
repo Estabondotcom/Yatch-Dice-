@@ -426,13 +426,6 @@ function checkEndGame() {
   }
 }
 
-function calculateFinalScore() {
-  const upper = ["ones", "twos", "threes", "fours", "fives", "sixes"];
-  const upperTotal = upper.reduce((sum, cat) => sum + (scored[cat] || 0), 0);
-  const bonus = upperTotal >= 63 ? 35 : 0;
-  return Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
-}
-
 function showGameCompleteBanner(score) {
   const banner = document.getElementById("game-complete-banner");
   const scoreText = document.getElementById("final-score-text");
@@ -449,6 +442,12 @@ function showGameCompleteBanner(score) {
     spread: 90,
     origin: { y: 0.6 }
   });
+}
+function calculateFinalScore() {
+  const upper = ["ones", "twos", "threes", "fours", "fives", "sixes"];
+  const upperTotal = upper.reduce((sum, cat) => sum + (scored[cat] || 0), 0);
+  const bonus = upperTotal >= 63 ? 35 : 0;
+  return Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
 }
 
 function startNewGame() {
