@@ -18,10 +18,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const diceContainer = document.getElementById("dice-container");
-const rollBtn = document.getElementById("roll-btn");
-const scorecard = document.getElementById("scorecard");
-
 let dice = [1, 1, 1, 1, 1];
 let locked = [false, false, false, false, false];
 let rollsLeft = 3;
@@ -683,3 +679,6 @@ function forceBonusYachtz() {
   yahtzeeCell.click(); // second click to confirm
 }
 
+const diceContainer = document.getElementById("dice-container");
+const rollBtn = document.getElementById("roll-btn");
+const scorecard = document.getElementById("scorecard");
