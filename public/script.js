@@ -574,4 +574,24 @@ document.getElementById("post-score-banner").addEventListener("click", () => {
   btn.textContent = "Score Posted";
 });
 
+function forceBonusYachtz() {
+  // Pretend the user already scored a 50-point Yachtz
+  scored["yahtzee"] = 50;
+  yachtzCount = 1;
+  gameStarted = true;
+  hasRolledThisTurn = true;
+
+  // Set all dice to the same number (e.g., all 6s)
+  dice = [6, 6, 6, 6, 6];
+  locked = [false, false, false, false, false];
+
+  // Re-render game state
+  renderDice();
+  updateScorePreviews();
+
+  // Manually trigger cell click on "yahtzee"
+  const yahtzeeCell = document.querySelector('[data-category="yahtzee"]');
+  yahtzeeCell.click(); // first click to preview
+  yahtzeeCell.click(); // second click to confirm
+}
 
