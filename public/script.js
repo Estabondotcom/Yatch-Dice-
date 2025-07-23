@@ -602,15 +602,17 @@ function promptAndPostScore(finalScore) {
   const submit = document.getElementById("submit-score");
   const cancel = document.getElementById("cancel-score");
 
+  // Reset input and error when opening modal
   input.value = "";
   error.textContent = "";
-  modal.style.display = "block";
+  modal.style.display = "flex";
 
+  // Submit handler
   submit.onclick = () => {
     const name = input.value.trim();
     const lowerName = name.toLowerCase();
 
-    if (!name || name.length > 5) {
+    if (name.length < 1 || name.length > 5) {
       error.textContent = "Name must be 1 to 5 characters.";
       return;
     }
@@ -620,7 +622,7 @@ function promptAndPostScore(finalScore) {
       return;
     }
 
-    // Submit valid score
+    // Submit to Firestore
     db.collection("leaderboard").add({
       name: name.toUpperCase(),
       score: finalScore,
@@ -628,19 +630,22 @@ function promptAndPostScore(finalScore) {
     }).then(() => {
       loadLeaderboard();
       modal.style.display = "none";
+
       const btn = document.getElementById("post-score-banner");
       btn.disabled = true;
       btn.style.opacity = "0.5";
       btn.style.cursor = "not-allowed";
       btn.textContent = "Score Posted";
-    }).catch((error) => {
+    }).catch((err) => {
+      console.error("Error posting score:", err);
       error.textContent = "Error submitting score. Try again.";
-      console.error("Error posting score:", error);
     });
   };
 
+  // Cancel handler
   cancel.onclick = () => {
     modal.style.display = "none";
+    error.textContent = "";
   };
 }
 
