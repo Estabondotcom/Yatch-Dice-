@@ -158,17 +158,16 @@ if (!gameStarted) {
   }
 
   // Bonus Yachtz — already scored with 50+
-  else if (currentScore >= 50) {
-    yachtzCount++;
-    const newScore = 50 + (yachtzCount - 1) * 100;
-    scored["yahtzee"] = newScore;
+ else if (currentScore >= 50) {
+  yachtzCount++;
+  scored["yahtzee"] = currentScore + 100;
 
-    const scoreCell = document.getElementById("score-yahtzee");
-    scoreCell.textContent = newScore;
-    scoreCell.className = "filled";
+  const scoreCell = document.getElementById("score-yahtzee");
+  scoreCell.textContent = scored["yahtzee"];
+  scoreCell.className = "filled";
 
-    triggerYachtzCelebration();
-  }
+  triggerYachtzCelebration();
+}
 
   // Yachtz was zeroed out before — lock it as zero
   else if (currentScore === 0) {
