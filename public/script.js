@@ -301,11 +301,18 @@ if (scored[category] !== undefined) {
     return;
   }
 
-  pendingCategory = category;
-  const score = calculateScoreForCategory(category);
-  const scoreCell = document.getElementById("score-" + category);
-  scoreCell.textContent = score;
-  scoreCell.className = "preview selected";
+// Clear any existing preview selections
+document.querySelectorAll("#scorecard td.preview").forEach(cell => {
+  cell.textContent = "";
+  cell.className = "";
+});
+
+// Set new pending selection
+pendingCategory = category;
+const score = calculateScoreForCategory(category);
+const scoreCell = document.getElementById("score-" + category);
+scoreCell.textContent = score;
+scoreCell.className = "preview selected";
 
   rollBtn.textContent = "Confirm";
   confirmMode = true;
