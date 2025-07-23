@@ -155,16 +155,14 @@
   </div>
 </div>
 
-<div id="submit-score-modal" style="display: none;">
-  <div class="score-submit-box">
-    <h2>Submit High Score</h2>
-    <p>You scored <strong id="submit-score-points">0</strong> points.</p>
-    <input id="score-name-input" type="text" maxlength="5" placeholder="Name (max 5 chars)">
-    <p id="score-error" style="color: red; display: none;">Invalid name.</p>
-    <div class="submit-buttons">
-      <button id="submit-score-confirm">Submit</button>
-      <button id="submit-score-cancel">Cancel</button>
-    </div>
+<div id="score-modal" class="modal" style="display:none;">
+  <div class="score-box">
+    <h2>Post Your Score</h2>
+    <p>Enter a name (1–5 characters):</p>
+    <input type="text" id="score-name-input" maxlength="5" />
+    <div id="score-error" style="color:red; font-size:0.8rem; margin-top:5px;"></div>
+    <button id="submit-score">Submit</button>
+    <button id="cancel-score">Cancel</button>
   </div>
 </div>
   
