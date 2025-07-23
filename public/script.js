@@ -229,6 +229,7 @@ setTimeout(() => {
   }
 
 }, 3000); // ← inside the timeout after renderDice()
+}
 
 function calculateUpperScore(n) {
   return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
