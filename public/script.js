@@ -596,31 +596,53 @@ const bannedWords = [
 
 // POST SCORE FUNCTION
 function promptAndPostScore(finalScore) {
-  const name = prompt("Enter a name for the leaderboard (up to 5 characters):", "PLAYER");
-  if (!name || name.length > 5) {
-    alert("Score not submitted. Name must be 1 to 5 characters.");
-    return;
-  }
+  const modal = document.getElementById("submit-score-modal");
+  const input = document.getElementById("score-name-input");
+  const errorText = document.getElementById("score-error");
+  const pointsDisplay = document.getElementById("submit-score-points");
 
-  const lowerName = name.toLowerCase();
+  input.value = "";
+  errorText.style.display = "none";
+  pointsDisplay.textContent = finalScore;
+  modal.style.display = "block";
 
-  // 🚫 Check for slurs or swears
-  if (bannedWords.some(word => lowerName.includes(word))) {
-    alert("Inappropriate name. Score not submitted.");
-    return;
-  }
+  // Confirm button logic
+  document.getElementById("submit-score-confirm").onclick = () => {
+    const name = input.value.trim();
+    const lowerName = name.toLowerCase();
 
-  db.collection("leaderboard").add({
-    name: name.toUpperCase(),
-    score: finalScore,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-  }).then(() => {
-    loadLeaderboard();
-  }).catch((error) => {
-    console.error("Error posting score:", error);
-  });
+    if (!name || name.length > 5 || bannedWords.some(word => lowerName.includes(word))) {
+      errorText.textContent = "Invalid or inappropriate name.";
+      errorText.style.display = "block";
+      return;
+    }
+
+    db.collection("leaderboard").add({
+      name: name.toUpperCase(),
+      score: finalScore,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+      modal.style.display = "none";
+      loadLeaderboard();
+    }).catch((error) => {
+      errorText.textContent = "Failed to post score. Try again.";
+      errorText.style.display = "block";
+      console.error("Error posting score:", error);
+    });
+
+    // Lock the post button to prevent double submit
+    const btn = document.getElementById("post-score-banner");
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+    btn.style.cursor = "not-allowed";
+    btn.textContent = "Score Posted";
+  };
+
+  // Cancel button logic
+  document.getElementById("submit-score-cancel").onclick = () => {
+    modal.style.display = "none";
+  };
 }
-
 // LOAD LEADERBOARD FUNCTION
 function loadLeaderboard() {
   const list = document.getElementById("leaderboard-list");
