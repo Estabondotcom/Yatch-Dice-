@@ -385,6 +385,7 @@ function checkEndGame() {
       document.getElementById("total-score").textContent = calculateFinalScore();
       triggerYachtzCelebration();
       saveGameState();
+      setTimeout(checkEndGame, 10);
       resetTurn();
     } else {
       gameOver = true;
@@ -423,6 +424,13 @@ function checkEndGame() {
     showGameCompleteBanner(calculateFinalScore());
     return;
   }
+}
+
+function calculateFinalScore() {
+  const upper = ["ones", "twos", "threes", "fours", "fives", "sixes"];
+  const upperTotal = upper.reduce((sum, cat) => sum + (scored[cat] || 0), 0);
+  const bonus = upperTotal >= 63 ? 35 : 0;
+  return Object.values(scored).reduce((a, b) => a + b, 0) + bonus;
 }
 
 function showGameCompleteBanner(score) {
