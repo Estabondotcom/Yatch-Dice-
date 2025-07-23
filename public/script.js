@@ -216,8 +216,23 @@ renderDice({ scramble: true });
 setTimeout(() => {
   updateScorePreviews();
   saveGameState();
-}, 3000);
-}
+
+  // ✅ Bonus Yahtzee end check
+  const allCats = [
+    "ones", "twos", "threes", "fours", "fives", "sixes",
+    "threeKind", "fourKind", "fullHouse", "smallStraight",
+    "largeStraight", "yahtzee", "chance"
+  ];
+  const filledCount = allCats.filter(cat => scored[cat] !== undefined).length;
+
+  if (!confirmMode && filledCount === 13 && scored["yahtzee"] >= 50 && !isYahtzee()) {
+    gameOver = true;
+    const total = calculateFinalScore();
+    showGameCompleteBanner(total);
+    saveGameState();
+  }
+
+}, 3000); // ← inside the timeout after renderDice()
 
 function calculateUpperScore(n) {
   return dice.filter(d => d === n).reduce((a, b) => a + b, 0);
@@ -379,26 +394,9 @@ function checkEndGame() {
 
   // 🎯 Case 2: All 13 filled and yahtzee >= 50
   if (allFilled && yahtzeeScore >= 50) {
-    if (isYahtzee()) {
-      yachtzCount++;
-      scored["yahtzee"] = yahtzeeScore + 100;
-
-      const scoreCell = document.getElementById("score-yahtzee");
-      scoreCell.textContent = scored["yahtzee"];
-      scoreCell.className = "filled";
-
-      document.getElementById("total-score").textContent = calculateFinalScore();
-      triggerYachtzCelebration();
-      saveGameState();
-      setTimeout(checkEndGame, 10);
-      resetTurn();
-    } else {
-      gameOver = true;
-      const total = calculateFinalScore();
-      showGameCompleteBanner(total);
-    }
-    return;
-  }
+  // Do nothing here. Let the game wait for the next roll
+  return;
+}
 
   // 🎯 Case 3: Only yahtzee left, and player rolled a yahtzee (score it as 50)
   if (filledCount === 12 && isYahtzee()) {
