@@ -448,7 +448,6 @@ function showGameCompleteBanner(score) {
     origin: { y: 0.6 }
   });
 }
-
 function calculateFinalScore() {
   const upper = ["ones", "twos", "threes", "fours", "fives", "sixes"];
   const upperTotal = upper.reduce((sum, cat) => sum + (scored[cat] || 0), 0);
@@ -581,6 +580,14 @@ function triggerYachtzCelebration() {
   void banner.offsetWidth; // force reflow
   banner.classList.add("yachtz-active");
 
+  // Add rainbow effect to dice temporarily
+  const diceEls = document.querySelectorAll(".die");
+  diceEls.forEach(die => die.classList.add("rainbow"));
+
+  setTimeout(() => {
+    diceEls.forEach(die => die.classList.remove("rainbow"));
+  }, 2000);
+}
 const bannedWords = [
   "fuck", "shit", "bitch", "ass", "dick", "cunt", "nigg", "fag", "rape", "Spook", "nazi", "jew", "jews",
   "slut", "whore", "cum", "cock", "piss", "twat", "retard", "suck", "jizz", "pussy", "homo", "chink",
@@ -678,3 +685,28 @@ document.getElementById("post-score-banner").addEventListener("click", () => {
 
   promptAndPostScore(score);
 });
+
+document.getElementById("cancel-score").addEventListener("click", () => {
+  document.getElementById("score-modal").style.display = "none";
+  document.getElementById("score-error").textContent = "";
+});
+function forceBonusYachtz() {
+  // Pretend the user already scored a 50-point Yachtz
+  scored["yahtzee"] = 50;
+  yachtzCount = 1;
+  gameStarted = true;
+  hasRolledThisTurn = true;
+
+  // Set all dice to the same number (e.g., all 6s)
+  dice = [6, 6, 6, 6, 6];
+  locked = [false, false, false, false, false];
+
+  // Re-render game state
+  renderDice();
+  updateScorePreviews();
+
+  // Manually trigger cell click on "yahtzee"
+  const yahtzeeCell = document.querySelector('[data-category="yahtzee"]');
+  yahtzeeCell.click(); // first click to preview
+  yahtzeeCell.click(); // second click to confirm
+}
