@@ -350,20 +350,79 @@ function updateScorePreviews() {
 function checkEndGame() {
   if (loadingSavedGame) return;
 
-  const requiredCategories = [
+  const allCats = [
     "ones", "twos", "threes", "fours", "fives", "sixes",
     "threeKind", "fourKind", "fullHouse", "smallStraight",
     "largeStraight", "yahtzee", "chance"
   ];
 
-  const allScored = requiredCategories.every(cat => scored[cat] !== undefined);
-  if (!allScored) return;
+  const filledCats = allCats.filter(cat => scored[cat] !== undefined);
+  const filledCount = filledCats.length;
+  const yahtzeeScore = scored["yahtzee"];
 
-  gameOver = true;
+  const allButYachtzFilled = filledCount === 12 && yahtzeeScore === undefined;
+  const allFilled = filledCount === 13;
+  const yachtzWasZero = yahtzeeScore === 0;
 
-  const total = parseInt(document.getElementById("total-score").textContent, 10) || 0;
-  showGameCompleteBanner(total);
-  saveGameState();
+  // 🎯 Case 1: All 13 filled and yahtzee was 0
+  if (allFilled && yachtzWasZero) {
+    gameOver = true;
+    const total = calculateFinalScore();
+    showGameCompleteBanner(total);
+    return;
+  }
+
+  // 🎯 Case 2: All 13 filled and yahtzee >= 50
+  if (allFilled && yahtzeeScore >= 50) {
+    if (isYahtzee()) {
+      yachtzCount++;
+      scored["yahtzee"] = yahtzeeScore + 100;
+
+      const scoreCell = document.getElementById("score-yahtzee");
+      scoreCell.textContent = scored["yahtzee"];
+      scoreCell.className = "filled";
+
+      document.getElementById("total-score").textContent = calculateFinalScore();
+      triggerYachtzCelebration();
+      saveGameState();
+      resetTurn();
+    } else {
+      gameOver = true;
+      const total = calculateFinalScore();
+      showGameCompleteBanner(total);
+    }
+    return;
+  }
+
+  // 🎯 Case 3: Only yahtzee left, and player rolled a yahtzee (score it as 50)
+  if (allButYachtzFilled && isYahtzee()) {
+    scored["yahtzee"] = 50;
+    yachtzCount = 1;
+
+    const scoreCell = document.getElementById("score-yahtzee");
+    scoreCell.textContent = "50";
+    scoreCell.className = "filled";
+
+    document.getElementById("total-score").textContent = calculateFinalScore();
+    triggerYachtzCelebration();
+    saveGameState();
+    resetTurn();
+    return;
+  }
+
+  // 🎯 Case 4: Only yahtzee left, but player did NOT roll one → game ends
+  if (allButYachtzFilled && !isYahtzee()) {
+    scored["yahtzee"] = 0;
+
+    const scoreCell = document.getElementById("score-yahtzee");
+    scoreCell.textContent = "0";
+    scoreCell.className = "filled-zero";
+
+    document.getElementById("total-score").textContent = calculateFinalScore();
+    gameOver = true;
+    showGameCompleteBanner(calculateFinalScore());
+    return;
+  }
 }
 
 function showGameCompleteBanner(score) {
