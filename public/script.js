@@ -687,6 +687,13 @@ document.getElementById("post-score-banner").addEventListener("click", () => {
   btn.textContent = "Score Posted";
 });
 
+document.getElementById("post-score-btn").addEventListener("click", () => {
+  document.getElementById("score-modal").style.display = "flex";
+});
+document.getElementById("cancel-score").addEventListener("click", () => {
+  document.getElementById("score-modal").style.display = "none";
+  document.getElementById("score-error").textContent = "";
+});
 function forceBonusYachtz() {
   // Pretend the user already scored a 50-point Yachtz
   scored["yahtzee"] = 50;
