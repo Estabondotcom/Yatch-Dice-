@@ -301,15 +301,15 @@ if (scored[category] !== undefined) {
     return;
   }
 
-// Only clear the previously selected preview cell
 if (pendingCategory) {
   const prevCell = document.getElementById("score-" + pendingCategory);
   if (prevCell) {
-    prevCell.textContent = "";
-    prevCell.className = "";
+    const preview = calculateScoreForCategory(pendingCategory);
+    prevCell.textContent = preview;
+    prevCell.className = "preview";
   }
 }
-  
+ 
 // Set new pending selection
 pendingCategory = category;
 const score = calculateScoreForCategory(category);
