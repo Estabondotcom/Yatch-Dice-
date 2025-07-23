@@ -304,9 +304,9 @@ if (scored[category] !== undefined) {
 if (pendingCategory) {
   const prevCell = document.getElementById("score-" + pendingCategory);
   if (prevCell) {
-    const preview = calculateScoreForCategory(pendingCategory);
-    prevCell.textContent = preview;
-    prevCell.className = "preview";
+const preview = calculateScoreForCategory(pendingCategory);
+prevCell.textContent = (preview === 0) ? "0" : preview;
+prevCell.className = "preview";
   }
 }
  
