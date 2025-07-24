@@ -594,18 +594,23 @@ const bannedWords = [
   // Add more as needed — partial matches work too (e.g. "nigg" catches all variants)
 ];
 
-// POST SCORE FUNCTION
-function promptAndPostScore(finalScore) {
+function promptAndPostScore(score) {
   const modal = document.getElementById("score-modal");
-  const input = document.getElementById("score-name-input");
-  const error = document.getElementById("score-error");
-  const submit = document.getElementById("submit-score");
-  const cancel = document.getElementById("cancel-score");
+  const nameInput = document.getElementById("score-name-input");
+  const errorMsg = document.getElementById("score-error");
 
-  // Reset input and error when opening modal
-  input.value = "";
-  error.textContent = "";
+  if (!modal || !nameInput || !errorMsg) {
+    console.warn("Score modal or input elements not found in DOM");
+    return;
+  }
+
   modal.style.display = "flex";
+  nameInput.value = "";
+  errorMsg.textContent = "";
+
+  // Set up listeners for Submit and Cancel (if not already)
+}
+
 
   // Submit handler
   submit.onclick = () => {
