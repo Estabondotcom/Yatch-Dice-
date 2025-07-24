@@ -652,7 +652,7 @@ function promptAndPostScore(score) {
     modal.style.display = "none";
     error.textContent = "";
   };
-}
+
 
 // LOAD LEADERBOARD FUNCTION
 function loadLeaderboard() {
