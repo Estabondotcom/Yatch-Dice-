@@ -594,27 +594,32 @@ const bannedWords = [
   // Add more as needed — partial matches work too (e.g. "nigg" catches all variants)
 ];
 
-function promptAndPostScore(score) {
+function promptAndPostScore(finalScore) {
   const modal = document.getElementById("score-modal");
   const nameInput = document.getElementById("score-name-input");
-  const errorMsg = document.getElementById("score-error");
+  const error = document.getElementById("score-error");
+  const submit = document.getElementById("submit-score");
+  const cancel = document.getElementById("cancel-score");
 
-  if (!modal || !nameInput || !errorMsg) {
-    console.warn("Score modal or input elements not found in DOM");
+  if (!modal || !nameInput || !error || !submit || !cancel) {
+    console.warn("Modal elements missing from DOM");
     return;
   }
 
   modal.style.display = "flex";
   nameInput.value = "";
-  errorMsg.textContent = "";
+  error.textContent = "";
 
-  // Set up listeners for Submit and Cancel (if not already)
-}
+  // Remove existing listeners to prevent stacking
+  const newSubmit = submit.cloneNode(true);
+  submit.parentNode.replaceChild(newSubmit, submit);
 
+  const newCancel = cancel.cloneNode(true);
+  cancel.parentNode.replaceChild(newCancel, cancel);
 
   // Submit handler
-  submit.onclick = () => {
-    const name = input.value.trim();
+  newSubmit.addEventListener("click", () => {
+    const name = nameInput.value.trim();
     const lowerName = name.toLowerCase();
 
     if (name.length < 1 || name.length > 5) {
@@ -627,7 +632,6 @@ function promptAndPostScore(score) {
       return;
     }
 
-    // Submit to Firestore
     db.collection("leaderboard").add({
       name: name.toUpperCase(),
       score: finalScore,
@@ -637,21 +641,25 @@ function promptAndPostScore(score) {
       modal.style.display = "none";
 
       const btn = document.getElementById("post-score-banner");
-      btn.disabled = true;
-      btn.style.opacity = "0.5";
-      btn.style.cursor = "not-allowed";
-      btn.textContent = "Score Posted";
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+        btn.style.cursor = "not-allowed";
+        btn.textContent = "Score Posted";
+      }
     }).catch((err) => {
       console.error("Error posting score:", err);
       error.textContent = "Error submitting score. Try again.";
     });
-  };
+  });
 
   // Cancel handler
-  cancel.onclick = () => {
+  newCancel.addEventListener("click", () => {
     modal.style.display = "none";
     error.textContent = "";
-  };
+  });
+}
+
 
 
 // LOAD LEADERBOARD FUNCTION
