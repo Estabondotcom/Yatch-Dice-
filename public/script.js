@@ -680,11 +680,18 @@ document.getElementById("close-leaderboard").addEventListener("click", () => {
   document.getElementById("leaderboard-modal").style.display = "none";
 });
 
-document.getElementById("post-score-banner").addEventListener("click", () => {
-  const score = parseInt(document.getElementById("total-score").textContent);
-
-  promptAndPostScore(score);
+window.addEventListener("DOMContentLoaded", () => {
+  const postBtn = document.getElementById("post-score-banner");
+  if (postBtn) {
+    postBtn.addEventListener("click", () => {
+      const score = parseInt(document.getElementById("total-score").textContent);
+      promptAndPostScore(score);
+    });
+  } else {
+    console.warn("post-score-banner not found in DOM at load time.");
+  }
 });
+
 
 document.getElementById("cancel-score").addEventListener("click", () => {
   document.getElementById("score-modal").style.display = "none";
